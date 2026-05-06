@@ -1,0 +1,191 @@
+$status-colors: (
+  success: (
+    bg:     $success-bg-subtle,   // #F0FBF6
+    text:   $success,  // #245C49
+    border: $success-border-subtle   // #BFEAD6
+  ),
+  blue: (
+    bg:     $primary-50,      // #EBF8FF
+    text:   $primary,     // #0C4A6E
+    border: $primary-200      // #B5E3F6
+  ),
+  danger: (
+    bg:     $danger-bg-subtle,     // #FEF1F3
+    text:   $danger,    // #CC0C39
+    border: $danger-border-subtle     // #FAB1C2
+  ),
+  warning: (
+    bg:     $warning-bg-subtle,   // #FFFBEB
+    text:   $warning,  // #B45309
+    border: $warning-border-subtle   // #FDE68A
+  ),
+  info: (
+    bg:     $info-bg-subtle,      // #EBF5FE
+    text:   $info,     // #0F5BAA
+    border: $info-border-subtle      // #AED7FB
+  ),
+  neutral: (
+    bg:     $gray-100,      // #F3F4F6
+    text:   $gray-600, // #6B7280
+    border: $border-color  // #EEF0F3
+  )
+);
+
+
+@each $name, $values in $status-colors {
+
+
+  .status-#{$name} {
+    background-color: map-get($values, bg);
+    color: map-get($values, text);
+    border: 1px solid map-get($values, border);
+  }
+  .status-#{$name}-inverse {
+    background-color: map-get($values, text);
+    color: #fff;
+    border: 1px solid map-get($values, text);
+  }
+
+  // Text only 
+  .text-#{$name} {
+    color: map-get($values, text) !important;
+  }
+
+  // Soft background
+  .bg-#{$name}-soft {
+    background-color: map-get($values, bg) !important;
+  }
+
+  // Soft border
+  .border-#{$name}-soft {
+    border-color: map-get($values, border) !important;
+  }
+
+  // Dot only color helper
+  .dot-#{$name} {
+    background-color: map-get($values, text);
+  }
+}
+
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px 6px 8px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 50px;
+  line-height: 1;
+  max-height: 26px;
+}
+
+
+
+.status-alert {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+
+.status-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+
+  &::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: currentColor;
+    display: inline-block;
+  }
+}
+
+// Sizes
+.status-dot-sm::before {
+  width: 6px;
+  height: 6px;
+}
+
+.status-dot-lg::before {
+  width: 10px;
+  height: 10px;
+}
+
+// =============================
+// 🔘 Dot Only (no text)
+// =============================
+.status-dot-only {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+// =============================
+// 🔥 Pulse Animation (Live)
+// =============================
+@keyframes status-pulse {
+  // pulse color matches $success: #2FBF71 → rgb(53, 123, 98)
+  0%   { box-shadow: 0 0 0 0   rgba(53, 123, 98, 0.6); }
+  70%  { box-shadow: 0 0 0 6px rgba(53, 123, 98, 0); }
+  100% { box-shadow: 0 0 0 0   rgba(53, 123, 98, 0); }
+}
+
+.status-live {
+  position: relative;
+
+  &::before {
+    animation: status-pulse 1.5s infinite;
+  }
+}
+
+
+// ================================================================
+// DOCUMENT EXPIRY STATES  (.expiry-badge inside .doc-card)
+// ================================================================
+
+.expiry-valid    { background: $success-bg-subtle; color: $success; }
+.expiry-expiring { background: $warning-bg-subtle;    color: $warning; }
+.expiry-expired  { background: $danger-bg-subtle;      color: $danger; }
+
+
+// ================================================================
+// DETAIL / STATUS BANNER  (inline contextual alert)
+// ================================================================
+
+.detail-banner {
+  padding: 20px 24px;
+  border-radius: 24px ;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+
+  &.confirmed {
+    background: $success-bg-subtle;
+    border: 1px solid rgba($success, 0.15);
+  }
+
+  &.completed {
+    background: $primary-200;
+    border: 1px solid rgba($primary, 0.12);
+  }
+
+  &.cancelled {
+    background: $danger-bg-subtle;
+    border: 1px solid rgba($danger, 0.12);
+  }
+
+  i { font-size: 22px; }
+
+  .banner-text {
+    h4 { font-size: 15px; font-weight: 600; margin: 0; }
+    p  { font-size: 13px; margin: 0; opacity: 0.7; }
+  }
+}

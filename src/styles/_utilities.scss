@@ -1,0 +1,169 @@
+$primary-50:  #EBF5FE;
+$primary-100: #D6EBFD;
+$primary-200: #AED7FB;
+
+$secondary-50:  #C8DCFF;
+$secondary-100: #A5C6FF;
+$secondary-200: #83AFFF;
+$secondary-600: #1D5AC7; // accent / UI
+$secondary-800: #083E9E; // base dark
+
+:root {
+  // Primary
+  --primary-50:  #{$primary-50};
+  --primary-100: #{$primary-100};
+  --primary-200: #{$primary-200};
+  --primary:       #{$primary};
+  --primary-hover:  #{$primary-hover};
+  --primary-pressed:#{$primary-pressed};
+
+  // Secondary
+  --secondary-50:  #{$secondary-50};
+  --secondary-100: #{$secondary-100};
+  --secondary-200: #{$secondary-200};
+  --secondary-600: #{$secondary-600};
+  --secondary:        #{$secondary};
+  --secondary-dark:   #{$secondary-dark};
+
+  // Base
+  --body-bg:    #{$body-bg};
+  --text-primary: #{$text-primary};
+
+  --light: #{$body-bg};
+  --dark:  #{$dark};
+
+  // Card
+  --card-bg:     #{$card-bg};
+  --card-border: #{$card-border-color};
+
+  // Input
+  --input-bg:     #{$input-bg};
+  --input-border: #{$input-border-color};
+
+  // Text
+  --text-muted:       #{$text-muted};
+  --text-disabled:    #{$text-disabled};
+  --text-tertiary:    #{$text-tertiary};
+  --text-placeholder: #{$input-placeholder-color};
+
+  // Borders
+  --border-color: #{$border-color};
+
+  // Success
+  --success:        #{$success};
+  --success-bg:     #{$success-bg-subtle};
+  --success-border: #{$success-border-subtle};
+  --success-text:   #{$success-text};
+
+  // Warning
+  --warning:        #{$warning};
+  --warning-bg:     #{$warning-bg-subtle};
+  --warning-border: #{$warning-border-subtle};
+  --warning-text:   #{$warning-text};
+
+  // Danger
+  --danger:        #{$danger};
+  --danger-bg:     #{$danger-bg-subtle};
+  --danger-border: #{$danger-border-subtle};
+  --danger-text:   #{$danger-text};
+
+  // Info
+  --info:        #{$info};
+  --info-bg:     #{$info-bg-subtle};
+  --info-border: #{$info-border-subtle};
+  --info-text:   #{$info-text};
+}
+
+.p-xs { padding: var(--space-xs); }
+.p-sm { padding: var(--space-sm); }
+.p-md { padding: var(--space-md); }
+.p-lg { padding: var(--space-lg); }
+.p-xl { padding: var(--space-xl); }
+.p-xxl { padding: var(--space-xxl); }
+.p-3xl { padding: var(--space-3xl); }
+
+.m-xs { margin: var(--space-xs); }
+.m-sm { margin: var(--space-sm); }
+.m-md { margin: var(--space-md); }
+.m-lg { margin: var(--space-lg); }
+.m-xl { margin: var(--space-xl); }
+.m-xxl { margin: var(--space-xxl); }
+.m-3xl { margin: var(--space-3xl); }
+
+
+.radius-xs { border-radius: var(--radius-xs); }
+.radius-sm { border-radius: var(--radius-sm); }
+.radius-md { border-radius: var(--radius-md); }
+.radius-lg { border-radius: var(--radius-lg); }
+.radius-xl { border-radius: var(--radius-xl); }
+.radius-2xl { border-radius: var(--radius-2xl); }
+.radius-3xl { border-radius: var(--radius-3xl); }
+.radius-full { border-radius: var(--radius-full); }
+
+
+.shadow-xs { box-shadow: var(--shadow-xs); }
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+.shadow-xl { box-shadow: var(--shadow-xl); }
+.shadow-brand { box-shadow: var(--shadow-brand); }
+.shadow-inner { box-shadow: var(--shadow-inner); }
+
+
+.font-base { font-family: var(--font-family); }
+
+.lh-tight { line-height: var(--line-height-tight); }
+.lh-snug { line-height: var(--line-height-snug); }
+.lh-normal { line-height: var(--line-height-normal); }
+.lh-relaxed { line-height: var(--line-height-relaxed); }
+.lh-loose { line-height: var(--line-height-loose); }
+
+// ── Empty state ────────────────────────────────────────────────
+.empty-state {
+  text-align: center;
+  padding: 48px 20px;
+
+  i {
+    font-size: 40px;
+    color: $gray-300;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: $text-primary;
+    margin-bottom: 4px;
+  }
+
+  p {
+    font-size: $text-sm;
+    color: $text-muted;
+  }
+}
+
+
+// ── Reveal / scroll-in animation ──────────────────────────────
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal-delay-1 { transition-delay: 0.05s; }
+.reveal-delay-2 { transition-delay: 0.10s; }
+.reveal-delay-3 { transition-delay: 0.15s; }
+
+.icon-blue    { background: $primary-50;    color: $primary; }
+.icon-success { background: $success-bg-subtle; color: $success; }
+.icon-warning { background: $warning-bg-subtle; color: $warning; }
+.icon-danger  { background: $danger-bg-subtle;   color: $danger; }
+.icon-info    { background: $info-bg-subtle;    color: $info; }
+.icon-secondary    { background: $secondary-50;    color: $secondary-800; }
+.icon-neutral    { background: $gray-200;    color: $secondary-800; }

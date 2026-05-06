@@ -1,0 +1,64 @@
+// ================================================================
+//  main.scss — CiviQueue SCSS Entry Point
+//  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//  IMPORT ORDER
+//  1. Design tokens   (mixins → typography → spacing → variables → utilities)
+//  2. Bootstrap
+//  3. Base            (padding & margin)
+//  4. Components      (shared UI pieces used across pages)
+//  5. Pages           (page-specific styles)
+// ================================================================
+
+
+// ── 1. Design tokens ───────────────────────────────────────────
+@import "custom-mixins";   // fluid-type / fluid-text — must come first
+@import "typography";      // $text-*, $fw-*, .text-{size}, .display-{size}, .fw-{weight}
+@import "spacing";         // $radius-*, $shadow-*, $space-*, .shadow-* utilities
+@import "variables";       // $primary, $secondary, $gray-*, status colours, etc.
+@import "utilities";       // :root CSS custom properties + icon / reveal utilities
+
+
+// ── 2. Bootstrap ───────────────────────────────────────────────
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+
+// ── 3. Base ────────────────────────────────────────────────────
+@import "padding&margin";
+
+
+// ── 4. Components ──────────────────────────────────────────────
+@import "components/header";
+@import "components/buttons";
+@import "components/card";
+@import "components/badges";
+@import "components/status";
+@import "components/stepper";
+@import "components/modal";
+@import "components/inputfields";
+@import "components/dropdown-field";
+@import "components/calendar";
+@import "components/alert";
+@import "components/upload";
+@import "components/tabs";
+@import "components/notifications";
+@import "components/accordion";
+@import "components/sidemenu";
+@import "components/pageheader";
+@import "components/tags";
+@import "components/toggle";
+@import "components/breadcrumb";
+@import "components/icon";
+@import "components/pagination";
+@import "components/case-study";
+
+
+// ── 5. Pages ───────────────────────────────────────────────────
+@import "pages/index";
+@import "pages/booking";
+@import "pages/results";
+@import "pages/services";
+@import "pages/service-details";
+@import "pages/dashboard";
+@import "pages/about";
+@import "pages/help";
+@import "pages/mobile-enhancements"; // must be last — overrides above

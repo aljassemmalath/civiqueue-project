@@ -1,0 +1,93 @@
+$primary-50:       #EBF5FE;
+$primary-100:      #D6EBFD;
+$primary-200:      #AED7FB;
+$primary:          #1B84E7; // (base)
+$primary-hover:    #156ABE; 
+$primary-pressed: #115599; 
+$primary-selected: #0D447A; 
+$primary-dark:     #00315F; 
+
+$secondary-50:    #C8DCFF;
+$secondary-100:   #A5C6FF;
+$secondary-200:   #83AFFF;
+$secondary-600:   #083E9E; // accent / UI
+$secondary:       #132F6B; // secondary-800 (base)
+$secondary-hover:  #0F2556; // secondary-900
+$secondary-pressed:  #0C1E45; // secondary-900
+$secondary-selected:  #091735; // secondary-900
+$secondary-dark:#07142f; // secondary-900 
+
+
+// $primary:       #1B84E7; // blue-400 (base)
+// $primary-dark:  #0A4582; // blue-800
+// $primary-darker:#082D58; // blue-900
+
+// $secondary:     #112B5F; // secondary-800 (base)
+// $secondary-dark:#0B1B3C; // secondary-900
+// $secondary-darker:#07142f; // secondary-900
+
+$body-bg:       #F5F7FA; // Main Page Bg
+$dark:          #111827; // neutral-900
+
+$card-bg:       #F4F6F9; // card
+$card-border-color: #E5E7EB; // border
+
+$input-bg:      #FFFFFF; // neutral-0
+$input-border-color: #EEF0F3; // border
+
+$text-primary:    #2f2f2f; // text-secondary
+$text-muted:    #6B7280; // text-secondary
+$input-placeholder-color: #C1C9D6; // text-placeholders
+
+$text-disabled: #AEB6C2; // text-disabled
+$text-tertiary: #98A2B3; // text-teritary
+
+$border-color:  #EDF3FA; // border
+
+$success:       #2FBF71; // green-600 (base)
+$success-bg-subtle: #F0FBF6; // green-50
+$success-border-subtle: #BFEAD6; // green-200
+$success-text:  #0E2F25; // green-900
+
+$warning:       #D97706; // yellow-600 (base)
+$warning-bg-subtle: #FFFBEB; // yellow-50
+$warning-border-subtle: #FDE68A; // yellow-200
+$warning-text:  #78350F; // yellow-900
+
+$danger:        #CC0C39; // red-600 (base)
+$danger-bg-subtle: #FEF1F3; // red-50
+$danger-border-subtle: #FAB1C2; // red-200
+$danger-text:   #520415; // red-900
+
+$info:          #6C5CE7;
+$info-bg-subtle: #F5F3FF; 
+$info-border-subtle: #D5CCFD; 
+$info-text:     #2C2470; 
+
+$turquoise:          #3CB3AA; 
+$turquoise-bg-subtle: #F0FDFA; 
+$turquoise-border-subtle: #99F6E4; 
+$turquoise-text:     #0F766E; 
+
+$btn-disabled-bg: #EEF1F5; // disabled button
+$btn-disabled-border-color: #EEF1F5;
+
+$section-alt-bg: #EEF2F6; // sectionalternate
+
+$gray-100: #F9FAFB; // neutral-50
+$gray-200: #F3F4F6; // neutral-100
+$gray-300: #EEF0F3; // neutral-200
+$gray-400: #D1D5DB; // neutral-300
+$gray-500: #9CA3AF; // neutral-400
+$gray-600: #6B7280; // neutral-500
+$gray-700: #4B5563; // neutral-600
+$gray-800: #374151; // neutral-700
+$gray-900: #1F2937; // neutral-800
+$black:    #111827; // neutral-900
+$white:    #FFFFFF; // neutral-0
+
+// Brand shadow aliases (semantic names for specific shadow tokens in _spacing.scss)
+$shadow-brand-xs: 0 1px 2px rgba(17, 43, 95, 0.12);
+$shadow-brand-sm: 0 4px 8px rgba(17, 43, 95, 0.12);
+$shadow-brand-md: 0 8px 16px rgba(17, 43, 95, 0.12);
+// Note: .shadow-* utility classes are generated in _spacing.scss where the tokens live

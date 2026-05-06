@@ -1,0 +1,75 @@
+.faq-accordion {
+
+  .accordion-item {
+    border: none;
+    border-left: 3px solid $gray-200;
+    border-radius: 0;
+    background: $input-bg;
+    margin-bottom: 0;
+    overflow: visible;
+    transition: border-color 0.2s ease;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $border-color;
+    }
+
+    &:has(.accordion-button:not(.collapsed)) {
+      border-left-color: $primary;
+    }
+  }
+
+  .accordion-button {
+    background-color: transparent;
+    box-shadow: none;
+    font-size: $text-sm;
+    font-weight: $fw-semibold;
+    color: $secondary;
+    gap: 12px;
+
+    &:not(.collapsed) {
+      background-color: transparent;
+      color: $primary;
+      box-shadow: none;
+    }
+
+    &:hover {
+      background: $primary-50;
+    }
+
+    &:focus {
+      box-shadow: none;
+      outline: none;
+    }
+
+    &::after {
+      content: '';
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      background-color: $gray-100;
+      border: 1px solid $gray-200;
+      border-radius: $radius-sm;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 14px;
+      transition: transform 0.25s ease, background-color 0.2s ease, border-color 0.2s ease;
+      margin-left: auto;
+    }
+
+    &:not(.collapsed)::after {
+      transform: rotate(-180deg);
+      background-color: $primary-50;
+      border-color: $primary-200;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%231B84E7' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+    }
+  }
+
+  .accordion-body {
+    padding: 0 24px 16px 24px; 
+    font-size: $text-sm;
+    color: $text-muted;
+    line-height: $line-height-relaxed;
+  }
+
+}

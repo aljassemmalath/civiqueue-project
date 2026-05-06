@@ -1,0 +1,618 @@
+// .case-study-page {
+//   background:
+//     radial-gradient(circle at top left, rgba($primary, 0.12), transparent 34%),
+//     linear-gradient(180deg, #f8fbff 0%, #f9fafb 18%, #ffffff 100%);
+//   color: $gray-900;
+
+//   .case-study-shell {
+//     padding-top: 128px;
+//     padding-bottom: $section-xl;
+//   }
+
+//   .case-study-hero {
+//     position: relative;
+//     padding: clamp(2rem, 4vw, 4rem);
+//     border-radius: $radius-3xl;
+//     overflow: hidden;
+//     color: $white;
+//     background:
+//       linear-gradient(135deg, rgba($secondary, 0.94) 0%, rgba($primary-dark, 0.92) 52%, rgba($primary, 0.88) 100%),
+//       url("/assets/images/heroImage.png") center/cover no-repeat;
+//     box-shadow: $shadow-xl;
+
+//     &::after {
+//       content: "";
+//       position: absolute;
+//       inset: 0;
+//       background:
+//         radial-gradient(circle at top right, rgba(255, 255, 255, 0.18), transparent 26%),
+//         linear-gradient(180deg, rgba(17, 43, 95, 0.08), rgba(17, 43, 95, 0.34));
+//       pointer-events: none;
+//     }
+//   }
+
+//   .case-study-hero-content,
+//   .case-study-hero-metrics {
+//     position: relative;
+//     z-index: 1;
+//   }
+
+//   .case-study-label {
+//     display: inline-flex;
+//     align-items: center;
+//     gap: 0.5rem;
+//     padding: 0.45rem 0.85rem;
+//     border-radius: $radius-full;
+//     background: rgba(255, 255, 255, 0.12);
+//     border: 1px solid rgba(255, 255, 255, 0.25);
+//     font-size: 0.875rem;
+//     font-weight: $fw-semibold;
+//     letter-spacing: 0.02em;
+//   }
+
+//   .case-study-kicker {
+//     max-width: 62ch;
+//     color: rgba(255, 255, 255, 0.82);
+//     font-size: clamp(1rem, 1.2vw, 1.125rem);
+//     line-height: $line-height-relaxed;
+//   }
+
+//   .case-study-meta {
+//     display: flex;
+//     flex-wrap: wrap;
+//     gap: 0.75rem;
+//     margin-top: 1.5rem;
+//   }
+
+//   .case-study-meta-item {
+//     padding: 0.7rem 1rem;
+//     border-radius: $radius-lg;
+//     background: rgba(255, 255, 255, 0.12);
+//     border: 1px solid rgba(255, 255, 255, 0.18);
+//     backdrop-filter: blur(10px);
+
+//     strong,
+//     span {
+//       display: block;
+//     }
+
+//     strong {
+//       font-size: 0.75rem;
+//       color: rgba(255, 255, 255, 0.68);
+//       text-transform: uppercase;
+//       letter-spacing: 0.06em;
+//     }
+
+//     span {
+//       margin-top: 0.25rem;
+//       font-size: 1rem;
+//       font-weight: $fw-semibold;
+//       color: $white;
+//     }
+//   }
+
+//   .metric-panel {
+//     display: grid;
+//     gap: 1rem;
+//   }
+
+//   .metric-card {
+//     padding: 1.25rem;
+//     border-radius: $radius-xl;
+//     background: rgba(255, 255, 255, 0.13);
+//     border: 1px solid rgba(255, 255, 255, 0.18);
+//     backdrop-filter: blur(16px);
+
+//     .metric-value {
+//       display: block;
+//       font-size: clamp(1.75rem, 3vw, 2.5rem);
+//       line-height: 1;
+//       font-weight: $fw-bold;
+//       margin-bottom: 0.5rem;
+//     }
+
+//     .metric-label {
+//       display: block;
+//       color: rgba(255, 255, 255, 0.74);
+//       font-size: 0.9rem;
+//     }
+//   }
+
+//   .summary-strip {
+//     margin-top: -2.25rem;
+//     position: relative;
+//     z-index: 2;
+//   }
+
+//   .summary-card {
+//     height: 100%;
+//     padding: 1.5rem;
+//     border-radius: $radius-2xl;
+//     background: rgba(255, 255, 255, 0.88);
+//     border: 1px solid rgba(17, 43, 95, 0.08);
+//     box-shadow: $shadow-md;
+
+//     .summary-card-eyebrow {
+//       display: inline-flex;
+//       margin-bottom: 0.85rem;
+//       font-size: 0.75rem;
+//       font-weight: $fw-semibold;
+//       letter-spacing: 0.08em;
+//       text-transform: uppercase;
+//       color: $primary;
+//     }
+
+//     p:last-child {
+//       margin-bottom: 0;
+//     }
+//   }
+
+//   .case-study-section {
+//     margin-top: $section-xl;
+//   }
+
+//   .case-study-section-header {
+//     max-width: 70ch;
+//     margin-bottom: 2rem;
+
+//     p {
+//       color: $gray-700;
+//       line-height: $line-height-relaxed;
+//       margin-bottom: 0;
+//     }
+//   }
+
+//   .cs-panel {
+//     background: rgba(255, 255, 255, 0.88);
+//     border: 1px solid rgba(17, 43, 95, 0.08);
+//     border-radius: $radius-2xl;
+//     box-shadow: $shadow-sm;
+//   }
+
+//   .cs-panel--padded {
+//     padding: clamp(1.25rem, 2vw, 2rem);
+//   }
+
+//   .section-stat {
+//     display: flex;
+//     align-items: flex-start;
+//     gap: 1rem;
+//     padding: 1.25rem;
+//     border-radius: $radius-xl;
+//     background: linear-gradient(180deg, rgba($primary, 0.06), rgba($secondary, 0.02));
+//     border: 1px solid rgba($primary, 0.09);
+//     height: 100%;
+
+//     .section-stat-icon {
+//       width: 3rem;
+//       height: 3rem;
+//       border-radius: $radius-lg;
+//       display: inline-flex;
+//       align-items: center;
+//       justify-content: center;
+//       background: rgba($primary, 0.12);
+//       color: $primary;
+//       font-size: 1.1rem;
+//       flex-shrink: 0;
+//     }
+
+//     strong {
+//       display: block;
+//       margin-bottom: 0.3rem;
+//       font-size: 1.05rem;
+//       color: $gray-900;
+//     }
+
+//     p {
+//       margin: 0;
+//       color: $gray-700;
+//       line-height: $line-height-relaxed;
+//     }
+//   }
+
+//   .persona-card,
+//   .insight-card,
+//   .flow-card,
+//   .deliverable-card,
+//   .lesson-card,
+//   .token-card,
+//   .component-card,
+//   .access-card {
+//     height: 100%;
+//     padding: 1.35rem;
+//     border-radius: $radius-xl;
+//     background: $white;
+//     border: 1px solid rgba(17, 43, 95, 0.08);
+//     box-shadow: $shadow-xs;
+//   }
+
+//   .persona-card-tag,
+//   .section-chip {
+//     display: inline-flex;
+//     align-items: center;
+//     padding: 0.4rem 0.7rem;
+//     border-radius: $radius-full;
+//     background: rgba($primary, 0.1);
+//     color: $primary-dark;
+//     font-size: 0.78rem;
+//     font-weight: $fw-semibold;
+//   }
+
+//   .bullet-list,
+//   .timeline-list,
+//   .mini-list,
+//   .check-list {
+//     list-style: none;
+//     padding: 0;
+//     margin: 0;
+//     display: grid;
+//     gap: 0.75rem;
+//   }
+
+//   .bullet-list li,
+//   .mini-list li,
+//   .check-list li {
+//     position: relative;
+//     padding-left: 1.1rem;
+//     color: $gray-700;
+//     line-height: $line-height-relaxed;
+
+//     &::before {
+//       content: "";
+//       width: 0.45rem;
+//       height: 0.45rem;
+//       border-radius: 50%;
+//       background: $primary;
+//       position: absolute;
+//       left: 0;
+//       top: 0.65rem;
+//     }
+//   }
+
+//   .timeline-list li {
+//     display: grid;
+//     grid-template-columns: 2.3rem 1fr;
+//     gap: 1rem;
+//     align-items: start;
+//   }
+
+//   .timeline-step {
+//     width: 2.3rem;
+//     height: 2.3rem;
+//     border-radius: 50%;
+//     display: inline-flex;
+//     align-items: center;
+//     justify-content: center;
+//     background: linear-gradient(135deg, $primary, $primary-dark);
+//     color: $white;
+//     font-weight: $fw-semibold;
+//     box-shadow: $shadow-brand;
+//   }
+
+//   .ia-map {
+//     background: linear-gradient(180deg, rgba($secondary, 0.98), rgba($secondary-dark, 0.98));
+//     color: rgba(255, 255, 255, 0.92);
+//     border-radius: $radius-2xl;
+//     padding: clamp(1.25rem, 3vw, 2rem);
+//     box-shadow: $shadow-lg;
+
+//     pre {
+//       margin: 0;
+//       white-space: pre-wrap;
+//       font-family: Consolas, Monaco, monospace;
+//       font-size: 0.88rem;
+//       line-height: 1.7;
+//       color: rgba(255, 255, 255, 0.88);
+//     }
+//   }
+
+//   .journey-grid {
+//     display: grid;
+//     grid-template-columns: repeat(6, minmax(0, 1fr));
+//     gap: 1rem;
+//   }
+
+//   .journey-stage {
+//     padding: 1.1rem;
+//     border-radius: $radius-xl;
+//     background: linear-gradient(180deg, rgba($white, 0.96), rgba($primary, 0.03));
+//     border: 1px solid rgba($primary, 0.1);
+//     min-height: 12rem;
+
+//     strong {
+//       display: block;
+//       color: $secondary;
+//       margin-bottom: 0.65rem;
+//     }
+
+//     p {
+//       margin: 0;
+//       color: $gray-700;
+//       line-height: $line-height-relaxed;
+//     }
+//   }
+
+//   .journey-stage-index {
+//     display: inline-flex;
+//     width: 2rem;
+//     height: 2rem;
+//     align-items: center;
+//     justify-content: center;
+//     border-radius: 50%;
+//     background: rgba($primary, 0.12);
+//     color: $primary-dark;
+//     font-size: 0.85rem;
+//     font-weight: $fw-bold;
+//     margin-bottom: 0.85rem;
+//   }
+
+//   .swatch-grid,
+//   .token-grid,
+//   .component-grid,
+//   .deliverable-grid,
+//   .lesson-grid {
+//     display: grid;
+//     gap: 1rem;
+//   }
+
+//   .swatch-grid {
+//     grid-template-columns: repeat(4, minmax(0, 1fr));
+//   }
+
+//   .swatch {
+//     overflow: hidden;
+//     border-radius: $radius-xl;
+//     border: 1px solid rgba(17, 43, 95, 0.08);
+//     background: $white;
+//     box-shadow: $shadow-xs;
+//   }
+
+//   .swatch-color {
+//     height: 5rem;
+//   }
+
+//   .swatch-meta {
+//     padding: 1rem;
+
+//     strong,
+//     span {
+//       display: block;
+//     }
+
+//     strong {
+//       color: $gray-900;
+//       margin-bottom: 0.25rem;
+//     }
+
+//     span {
+//       color: $gray-600;
+//       font-size: 0.9rem;
+//     }
+//   }
+
+//   .token-grid {
+//     grid-template-columns: repeat(3, minmax(0, 1fr));
+//   }
+
+//   .token-card h3,
+//   .component-card h3,
+//   .deliverable-card h3,
+//   .lesson-card h3,
+//   .access-card h3,
+//   .flow-card h3 {
+//     font-size: 1.1rem;
+//     margin-bottom: 0.75rem;
+//     color: $secondary;
+//   }
+
+//   .type-scale {
+//     display: grid;
+//     gap: 0.6rem;
+//     margin-top: 1rem;
+//   }
+
+//   .type-row {
+//     display: flex;
+//     align-items: baseline;
+//     justify-content: space-between;
+//     gap: 1rem;
+//     padding-bottom: 0.6rem;
+//     border-bottom: 1px solid rgba(17, 43, 95, 0.08);
+
+//     &:last-child {
+//       border-bottom: 0;
+//       padding-bottom: 0;
+//     }
+
+//     span:last-child {
+//       color: $gray-600;
+//       font-size: 0.88rem;
+//     }
+//   }
+
+//   .component-preview {
+//     display: flex;
+//     flex-wrap: wrap;
+//     gap: 0.75rem;
+//     margin-top: 1rem;
+//   }
+
+//   .component-badge {
+//     display: inline-flex;
+//     align-items: center;
+//     gap: 0.4rem;
+//     padding: 0.55rem 0.85rem;
+//     border-radius: $radius-full;
+//     background: $gray-100;
+//     color: $gray-800;
+//     font-size: 0.85rem;
+//     font-weight: $fw-medium;
+//   }
+
+//   .component-badge--success {
+//     background: #edf7f2;
+//     color: #245c49;
+//   }
+
+//   .component-badge--warning {
+//     background: #fff8e3;
+//     color: #92400e;
+//   }
+
+//   .component-badge--danger {
+//     background: #fef1f3;
+//     color: #a00a2d;
+//   }
+
+//   .component-badge--info {
+//     background: #f5f3ff;
+//     color: #5548c0;
+//   }
+
+//   .flow-step {
+//     display: inline-flex;
+//     align-items: center;
+//     gap: 0.55rem;
+//     padding: 0.5rem 0.8rem;
+//     border-radius: $radius-full;
+//     background: rgba($primary, 0.08);
+//     color: $primary-dark;
+//     font-size: 0.85rem;
+//     font-weight: $fw-semibold;
+//     margin-bottom: 0.9rem;
+//   }
+
+//   .responsive-frame {
+//     position: relative;
+//     min-height: 100%;
+//     padding: 1.5rem;
+//     border-radius: $radius-2xl;
+//     background: linear-gradient(145deg, $secondary 0%, #183e7c 100%);
+//     overflow: hidden;
+//     color: $white;
+
+//     &::after {
+//       content: "";
+//       position: absolute;
+//       width: 13rem;
+//       height: 13rem;
+//       right: -4rem;
+//       top: -4rem;
+//       border-radius: 50%;
+//       background: rgba(255, 255, 255, 0.08);
+//     }
+//   }
+
+//   .responsive-device {
+//     position: relative;
+//     z-index: 1;
+//     padding: 1rem;
+//     border-radius: $radius-xl;
+//     background: rgba(255, 255, 255, 0.08);
+//     border: 1px solid rgba(255, 255, 255, 0.12);
+//     margin-bottom: 1rem;
+//   }
+
+//   .responsive-device strong {
+//     display: block;
+//     margin-bottom: 0.35rem;
+//   }
+
+//   .impact-grid {
+//     display: grid;
+//     grid-template-columns: repeat(4, minmax(0, 1fr));
+//     gap: 1rem;
+//   }
+
+//   .impact-card {
+//     padding: 1.4rem;
+//     border-radius: $radius-xl;
+//     background: linear-gradient(180deg, rgba($white, 0.96), rgba($primary, 0.04));
+//     border: 1px solid rgba($primary, 0.1);
+//     box-shadow: $shadow-xs;
+
+//     strong {
+//       display: block;
+//       font-size: clamp(1.5rem, 2.5vw, 2.4rem);
+//       line-height: 1;
+//       color: $secondary;
+//       margin-bottom: 0.55rem;
+//     }
+
+//     span {
+//       color: $gray-700;
+//       line-height: $line-height-relaxed;
+//     }
+//   }
+
+//   .case-study-cta {
+//     margin-top: $section-xl;
+//     padding: clamp(1.5rem, 3vw, 2.4rem);
+//     border-radius: $radius-3xl;
+//     background: linear-gradient(135deg, rgba($secondary, 0.98) 0%, rgba($primary-dark, 0.92) 100%);
+//     color: $white;
+//     box-shadow: $shadow-lg;
+//   }
+
+//   .visual-card {
+//     height: 100%;
+//     min-height: 20rem;
+//     border-radius: $radius-2xl;
+//     overflow: hidden;
+//     box-shadow: $shadow-md;
+
+//     img {
+//       width: 100%;
+//       height: 100%;
+//       object-fit: cover;
+//     }
+//   }
+
+//   @media (max-width: 1199.98px) {
+//     .journey-grid {
+//       grid-template-columns: repeat(3, minmax(0, 1fr));
+//     }
+
+//     .swatch-grid,
+//     .impact-grid {
+//       grid-template-columns: repeat(2, minmax(0, 1fr));
+//     }
+//   }
+
+//   @media (max-width: 991.98px) {
+//     .case-study-shell {
+//       padding-top: 112px;
+//     }
+
+//     .summary-strip {
+//       margin-top: 1.5rem;
+//     }
+
+//     .token-grid {
+//       grid-template-columns: 1fr;
+//     }
+//   }
+
+//   @media (max-width: 767.98px) {
+//     .case-study-hero {
+//       border-radius: $radius-2xl;
+//     }
+
+//     .journey-grid,
+//     .swatch-grid,
+//     .impact-grid {
+//       grid-template-columns: 1fr;
+//     }
+
+//     .timeline-list li {
+//       grid-template-columns: 1.9rem 1fr;
+//       gap: 0.75rem;
+//     }
+
+//     .timeline-step {
+//       width: 1.9rem;
+//       height: 1.9rem;
+//       font-size: 0.8rem;
+//     }
+//   }
+// }

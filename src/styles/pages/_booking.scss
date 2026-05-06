@@ -1,0 +1,578 @@
+.selected-service-banner {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  padding: 12px $space-md;
+  background: $primary-50;
+  border: 1px solid $primary-100;
+  border-radius: $radius-md;
+  margin-bottom: 20px;
+
+  > i {
+    font-size: $text-md;
+    color: $primary;
+    flex-shrink: 0;
+  }
+
+  &-label {
+    display: block;
+    font-size: $text-2xs;
+    font-weight: $fw-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: $gray-500;
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+
+  &-name {
+    font-size: $text-sm;
+    font-weight: $fw-semibold;
+    color: $secondary;
+  }
+
+  &-change {
+    margin-left: auto;
+    flex-shrink: 0;
+    font-size: $text-xs2;
+    font-weight: $fw-medium;
+    color: $primary;
+    text-decoration: none;
+    &:hover { text-decoration: underline; }
+  }
+}
+
+
+.time-slot {
+  padding: 7px 14px;
+  border-radius: $radius-sm;
+  border: 1.5px solid $gray-300;
+  background: $white;
+  font-size: $text-xs2;
+  font-weight: $fw-medium;
+  color: $secondary;
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover:not(.unavailable) {
+    border-color: $primary;
+    color: $primary;
+    background: $primary-50;
+  }
+
+  &.selected {
+    border-color: $primary;
+    background: $primary;
+    color: $white;
+  }
+
+  &.unavailable {
+    border-color: $gray-200;
+    color: $gray-400;
+    background: $gray-100;
+    cursor: not-allowed;
+    text-decoration: line-through;
+  }
+}
+
+
+.review-section {
+  background: $gray-100;
+  border-radius: $radius-2xl;
+  padding: 20px;
+}
+
+.review-label {
+  font-size: $text-xs;
+  font-weight: $fw-semibold;
+  color: $text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.terms-check {
+  margin-top: 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: $space-sm;
+  font-size: $text-xs2;
+  color: $gray-600;
+
+  input[type="checkbox"] {
+    width: $text-md;
+    height: $text-md;
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+
+  a {
+    color: $primary;
+    text-decoration: underline;
+  }
+}
+
+
+@media (max-width: 767.98px) {
+  .review-section { padding: $space-md; }
+
+  .time-slot {
+    padding: 6px $space-sm;
+    font-size: $text-xs;
+  }
+
+  .booking-review-cols > .col-lg-8,
+  .booking-review-cols > .col-lg-4 {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .booking-step { padding-bottom: 80px; }
+
+  .form-group .col-md-6,
+  .bk-section .col-md-6 {
+    width: 100%;
+  }
+
+  .bk-section-header { margin-bottom: $space-md; }
+
+  .bk-confirmed-hero { padding: 24px $space-md; }
+
+  .bk-confirmed-actions { flex-direction: column; }
+}
+
+.booking-layout {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-start;
+  gap: 28px;
+  padding: $space-lg 0 80px;
+}
+
+.booking-panels {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.booking-stepper {
+  width: 280px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 96px;
+}
+
+// ── Mobile: stack layout, stepper goes above form ────────────────────────────
+@media (max-width: 991.98px) {
+  .booking-layout {
+    flex-direction: column;
+    gap: 0;
+    padding: 16px 0 80px;
+  }
+
+  .booking-stepper {
+    width: 100% !important;
+    position: static !important;
+    order: -1;
+    padding: 0 0 8px;
+  }
+
+  .booking-panels {
+    width: 100%;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .booking-layout { padding: 12px 0 100px; }
+
+  .bk-section { padding: 18px 16px !important; }
+  .bk-divider { margin: 0 16px !important; }
+
+  // Stack two-column form rows to single column
+  .bk-section .row > [class*="col-md"] {
+    width: 100%;
+  }
+}
+
+.v-stepper {
+  background: $white;
+  padding: $space-md-lg;
+  border-radius: $radius-lg;
+  border: 1px solid $gray-200;
+  width: 100%;
+}
+
+.bk-section {
+  padding: $space-md-lg;
+
+  @media (max-width: 575.98px) { padding: 20px 18px; }
+}
+
+.bk-divider {
+  height: 1px;
+  background: $gray-200;
+  margin: 0 24px;
+
+  @media (max-width: 575.98px) { margin: 0 18px; }
+}
+
+.bk-section-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.bk-section-title {
+  font-size: $text-sm2;
+  font-weight: $fw-semibold;
+  color: $primary;
+  margin: 0 0 3px;
+  line-height: $line-height-snug;
+}
+
+.bk-section-sub {
+  font-size: $text-xs2;
+  color: $text-muted;
+  margin: 0;
+  line-height: $line-height-normal;
+}
+
+// Hint text shown below locked dropdown fields
+.df-field-hint {
+  display: block;
+  font-size: 11px;
+  color: $gray-500;
+  margin-top: 5px;
+
+  // Hide once field is unlocked (parent loses df-locked class)
+  .df-locked + & {
+    display: block;
+  }
+}
+
+
+.doc-field-req {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $text-xs2;
+  font-weight: $fw-bold;
+  color: $danger;
+  margin-left: $radius-xs;
+  flex-shrink: 0;
+  line-height: 1;
+  vertical-align: middle;
+  transition: color 0.2s ease;
+
+  &--done {
+    color: $success;
+    font-size: $text-sm;
+    font-weight: $fw-regular;
+  }
+}
+
+.selected-center-info {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  padding: $space-sm $space-md;
+  background: $primary-50;
+  border: 1px solid $primary-100;
+  border-radius: $radius-md;
+  margin-top: $space-sm;
+}
+
+.selected-center-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: $radius-md;
+  background: $white;
+  border: 1px solid $primary-100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.selected-center-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.selected-center-name {
+  font-size: $text-xs2;
+  font-weight: $fw-semibold;
+  color: $secondary;
+}
+
+.selected-center-addr {
+  font-size: $text-xs;
+  color: $text-muted;
+}
+
+.bk-confirmed-hero {
+  text-align: center;
+  padding: 40px 24px $space-lg;
+}
+
+.bk-confirmed-circle {
+  position: relative;
+  width: 88px;
+  height: 88px;
+  margin: 0 auto 20px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    background: rgba($primary, 0.1);
+    animation: bk-pulse 2.4s ease-in-out infinite;
+  }
+}
+
+@keyframes bk-pulse {
+  0%, 100% { transform: scale(1);    opacity: 1;   }
+  50%       { transform: scale(1.1); opacity: 0.6; }
+}
+
+.bk-confirmed-icon {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: $primary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 28px rgba($primary, 0.32);
+  position: relative;
+  z-index: 1;
+}
+
+.bk-confirmed-title {
+  font-size: $text-xl;
+  font-weight: $fw-bold;
+  color: $primary;
+  margin: 0 0 $space-sm;
+}
+
+.bk-confirmed-sub {
+  font-size: $text-sm;
+  color: $text-muted;
+  margin: 0 auto 20px;
+  max-width: 440px;
+  line-height: $line-height-relaxed;
+}
+
+.bk-ref-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: $space-sm 20px;
+  background: $primary-50;
+  border: 1.5px solid $primary-100;
+  border-radius: $radius-full;
+  font-size: $text-sm2;
+  font-weight: $fw-bold;
+  color: $secondary;
+  letter-spacing: 0.04em;
+
+  i { color: $primary; font-size: $text-sm; }
+}
+
+.bk-qr-wrap {
+  width: 148px;
+  height: 148px;
+  border-radius: $radius-2xl;
+  background: $gray-100;
+  border: 2px dashed $gray-300;
+  margin: $space-sm auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s ease, background 0.2s ease;
+
+  &:hover {
+    border-color: $primary-200;
+    background: $primary-50;
+  }
+}
+
+.bk-qr-icon { font-size: 56px; color: $gray-400; }
+
+.bk-qr-hint {
+  font-size: $text-2xs;
+  color: $text-muted;
+  text-align: center;
+  margin-top: $space-sm;
+  margin-bottom: 0;
+  line-height: $line-height-normal;
+}
+
+.doc-per-field-list {
+  border: 1.5px solid $gray-300;
+  border-radius: $radius-md;
+  overflow: hidden;
+}
+
+.doc-per-field {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px $space-md;
+  background: $white;
+  border-bottom: 1px solid $gray-100;
+  transition: background 0.18s ease;
+
+  &:last-child { border-bottom: none; }
+
+  &.has-file {
+    background: rgba($success, 0.025);
+    border-left: 3px solid $success;
+    padding-left: 13px;
+  }
+
+  @media (max-width: 575.98px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $space-sm;
+  }
+}
+
+.doc-per-field-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.doc-per-field-name {
+  font-size: $text-xs2;
+  font-weight: $fw-semibold;
+  color: $secondary;
+  display: flex;
+  align-items: center;
+  margin-bottom: 3px;
+  line-height: $line-height-snug;
+}
+
+.doc-per-field-desc {
+  font-size: $text-2xs;
+  color: $text-muted;
+  line-height: 1.45;
+  margin-bottom: 6px;
+}
+
+.doc-per-field-status {
+  min-height: 20px;
+}
+
+.doc-status-empty {
+  font-size: $text-xs;
+  color: $gray-400;
+  font-style: italic;
+}
+
+.doc-status-file {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.doc-status-check-icon {
+  font-size: $text-sm;
+  color: $success;
+  flex-shrink: 0;
+}
+
+.doc-status-name {
+  font-size: $text-xs2;
+  font-weight: $fw-medium;
+  color: $gray-800;
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.doc-status-meta {
+  font-size: $text-2xs;
+  color: $gray-400;
+  flex-shrink: 0;
+}
+
+.doc-status-remove {
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: $gray-100;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  color: $gray-500;
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background: $danger-bg-subtle;
+    color: $danger;
+  }
+}
+
+.doc-per-attach-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 14px;
+  border: 1.5px solid $gray-300;
+  border-radius: $radius-full;
+  background: $white;
+  font-size: $text-xs2;
+  font-weight: $fw-medium;
+  color: $gray-600;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+
+  i { font-size: $text-xs2; color: $primary; transition: color 0.15s ease; }
+
+  &:hover {
+    border-color: $primary;
+    color: $primary;
+    background: $primary-50;
+  }
+
+  .has-file & {
+    border-color: $success-border-subtle;
+    color: $success;
+    background: $success-bg-subtle;
+
+    i { color: $success; }
+
+    &:hover {
+      border-color: $success;
+      background: rgba($success, 0.1);
+    }
+  }
+
+  @media (max-width: 575.98px) {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.doc-per-hint {
+  font-size: $text-2xs;
+  color: $gray-400;
+  margin-bottom: 0;
+}

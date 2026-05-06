@@ -1,0 +1,28 @@
+@use 'sass:math';
+
+@mixin fluid-type($size, $min-factor: 0.75, $vw-factor: 1.5) {
+  font-size: clamp(
+    #{math.div($size, 1rem) * $min-factor}rem,
+    #{math.div($size, 1rem) * $vw-factor}vw,
+    #{$size}
+  );
+}
+
+@mixin fluid-text($size-name, $weight-name: "regular", $type: "text") {
+  @if $type == "text" {
+    $size: map-get($text-sizes, $size-name);
+
+    @if index($static-text-sizes, $size-name) {
+      // Small sizes — fixed, no fluid scaling
+      font-size: $size;
+    } @else {
+      @include fluid-type($size, 0.95, 1.5);
+    }
+
+  } @else if $type == "display" {
+    $size: map-get($display-sizes, $size-name);
+    @include fluid-type($size, 0.75, 1.5);
+  }
+
+  font-weight: map-get($font-weights, $weight-name);
+}

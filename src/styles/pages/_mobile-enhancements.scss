@@ -1,0 +1,570 @@
+// ══════════════════════════════════════════════════════════════════
+//  ANNOUNCEMENT BAR — scrolling ticker on mobile
+// ══════════════════════════════════════════════════════════════════
+
+.announcement-ticker-text {
+  white-space: nowrap;
+}
+
+@media (max-width: 767.98px) {
+  .announcement-ticker {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .announcement-ticker-text {
+    display: inline-block;
+    animation: announcement-scroll 16s linear infinite;
+    padding-left: 100%;
+  }
+}
+
+@keyframes announcement-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+
+// ══════════════════════════════════════════════════════════════════
+//  SERVICE DETAILS PAGE
+
+@media (max-width: 991.98px) {
+  // Ready to Apply card above content on mobile
+  .sd-main .row.g-4.align-items-start {
+    display: flex;
+    flex-direction: column;
+
+    > .col-lg-8 { order: 1; }
+    > .col-lg-4 { order: 0; margin-bottom: 16px; }
+  }
+
+  .sd-sidebar-sticky { position: static !important; }
+}
+
+@media (max-width: 767.98px) {
+  // Hero: meta strip stacks vertically as cards
+  .sd-meta-strip {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    gap: 4;
+  }
+
+  .sd-meta-item {
+    border-right: none !important;
+    border-bottom: 1px solid $gray-200;
+    padding: 14px 16px;
+    width: 100%;
+    flex: none;
+
+    &:last-child { border-bottom: none; }
+  }
+
+  // Document list: hide end badge (shown inline via HTML sibling)
+  .sd-doc-required-desktop { display: none !important; }
+  .sd-doc-required-mobile  { display: inline-flex !important; }
+
+  .sd-doc-item {
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 16px 0;
+  }
+
+  .sd-doc-info .info-value {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+}
+
+
+// ══════════════════════════════════════════════════════════════════
+//  SERVICES PAGE
+// ══════════════════════════════════════════════════════════════════
+
+@media (max-width: 767.98px) {
+  // Page header: title + search stack vertically
+  .services-header-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px;
+
+    > div:first-child { flex: none; }
+
+    .services-search-row {
+      display: flex;
+      gap: 8px;
+      align-items: stretch;
+
+      .search-bar { flex: 1; max-width: none !important; }
+
+      .mobile-filter-btn {
+        width: 44px;
+        height: 44px;
+        flex-shrink: 0;
+        border: 1px solid $gray-300;
+        border-radius: $radius-md;
+        background: $white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        color: $gray-600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover, &.active {
+          background: $primary-50;
+          border-color: $primary;
+          color: $primary;
+        }
+      }
+    }
+  }
+
+  // Mobile category filter bar (horizontal pills)
+  .mobile-cat-filter {
+    display: flex !important;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+    &::-webkit-scrollbar { display: none; }
+
+    .mobile-cat-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border: 1.5px solid $gray-300;
+      border-radius: $radius-full;
+      background: $white;
+      font-size: 13px;
+      font-weight: $fw-medium;
+      color: $gray-700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+
+      &.active {
+        background: $primary;
+        border-color: $primary;
+        color: $white;
+      }
+    }
+  }
+}
+
+
+// ══════════════════════════════════════════════════════════════════
+//  INDEX HOME PAGE
+// ══════════════════════════════════════════════════════════════════
+@media (max-width: 410px) {
+  // Hero: stack buttons vertically, each full width
+  .hero-cta-btns {
+    
+    flex-direction: column !important;
+    width: 100%;
+    padding: 0 $space-md;
+
+    > .btn {
+      width: 100% !important;
+      justify-content: center;
+    }
+  }
+}
+
+@media (max-width: 767.98px) {
+  .showcase-fade { display: none !important; }
+
+  // Hide desktop nav arrows inside the header on mobile
+  .showcase-nav { display: none !important; }
+
+  // Show the duplicate nav that sits below the cards
+  .showcase-nav-mobile { display: flex !important; }
+
+  // How it works: vertical cards, no connector
+  .hiw-steps {
+    display: flex !important  ;
+    flex-direction: column !important;
+    gap: 24px;
+    position: relative;
+  }
+
+  .hiw-connector { display: none !important; }
+
+  .hiw-step {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    // Remove top offset staggering
+    &--1, &--2, &--3 { margin-top: 0 !important; }
+  }
+
+  // FAQ: support card moves below accordion
+  .faq-support-mobile { display: block !important; }
+  .faq-support-desktop { display: none !important; }
+}
+
+
+// ══════════════════════════════════════════════════════════════════
+//  DASHBOARD — MY APPOINTMENTS
+// ══════════════════════════════════════════════════════════════════
+
+// Timeline overlays hidden on desktop — shown only via JS on mobile
+.timeline-overlay { display: none; }
+
+@media (max-width: 767.98px) {
+  // Hide horizontal custom-tabs
+  #page-appointments .custom-tabs { display: none !important; }
+
+  // Show mobile filter row
+  .mobile-appt-filter { display: flex !important; }
+
+  // Count label
+  .mobile-appt-count {
+    font-size: 15px;
+    font-weight: $fw-semibold;
+    color: $secondary;
+  }
+
+  // Filter icon button
+  .mobile-filter-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border: 1px solid $gray-300;
+    border-radius: $radius-md;
+    background: $white;
+    font-size: 13px;
+    font-weight: $fw-medium;
+    color: $gray-700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+
+    i { font-size: 15px; }
+    &:hover { background: $gray-100; border-color: $primary; color: $primary; }
+  }
+}
+
+// ── Compact mobile timeline row ──────────────────────────────────
+.timeline-mobile-compact {
+  display: none; // shown only in mobile media query
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 4px;
+
+  .tmc-step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .tmc-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: $radius-full;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+
+    &--pending {
+      background: rgba($primary, 0.1);
+      color: $primary;
+      border: 1.5px solid rgba($primary, 0.25);
+    }
+    &--confirmed {
+      background: rgba($primary, 0.1);
+      color: $primary;
+      border: 1.5px solid rgba($primary, 0.25);
+    }
+  }
+
+  .tmc-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .tmc-label {
+    font-size: 14px;
+    font-weight: $fw-semibold;
+    color: $secondary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .tmc-sub {
+    font-size: 11px;
+    color: $gray-500;
+    line-height: 1.4;
+  }
+
+  .tmc-btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+}
+
+// ── Appointment & Services filter modal option rows ───────────────
+.appt-filter-option,
+.svc-filter-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 20px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid $gray-100;
+  font-size: 14px;
+  font-weight: $fw-medium;
+  color: $gray-700;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: background 0.12s ease;
+
+  i { font-size: 16px; color: $gray-400; flex-shrink: 0; }
+
+  .appt-filter-count {
+    margin-left: auto;
+    background: $gray-100;
+    color: $gray-600;
+    font-size: 12px;
+    font-weight: $fw-semibold;
+    padding: 2px 8px;
+    border-radius: $radius-full;
+  }
+
+  &:last-child { border-bottom: none; }
+  &:hover { background: $gray-100; }
+
+  &.active {
+    background: rgba($primary, 0.06);
+    color: $primary;
+    i { color: $primary; }
+    .appt-filter-count { background: rgba($primary, 0.12); color: $primary; }
+  }
+}
+
+
+// ══════════════════════════════════════════════════════════════════
+//  DASHBOARD — APPOINTMENT DETAIL
+// ══════════════════════════════════════════════════════════════════
+
+@media (max-width: 767.98px) {
+  // Hide desktop quick-action card
+  .detail-quick-actions-desktop { display: none !important; }
+
+  // Mobile action button in header
+  .detail-mobile-action-btn { display: inline-flex !important; }
+
+  // Hide full stepper on mobile — compact row replaces it
+  .timeline-desktop-only { display: none !important; }
+
+  // Show compact current-step row on mobile
+  .timeline-mobile-compact { display: flex !important; }
+
+  // Full-screen timeline overlay
+  .timeline-overlay {
+    display: flex !important;
+    position: fixed;
+    inset: 0;
+    z-index: 1300;
+    background: rgba($secondary, 0.5);
+    backdrop-filter: blur(4px);
+    align-items: flex-end;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+
+    &.open {
+      opacity: 1;
+      pointer-events: all;
+
+      .timeline-sheet {
+        transform: translateY(0);
+      }
+    }
+  }
+
+  .timeline-sheet {
+    background: $white;
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 24px 20px 40px;
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .timeline-sheet-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    h5 {
+      font-size: 16px;
+      font-weight: $fw-semibold;
+      color: $secondary;
+      margin: 0;
+    }
+  }
+
+  .timeline-sheet-close {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid $gray-200;
+    background: $white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: $gray-500;
+    cursor: pointer;
+    flex-shrink: 0;
+
+    &:hover { background: $gray-100; }
+  }
+
+  .timeline-sheet-handle {
+    width: 36px;
+    height: 4px;
+    background: $gray-300;
+    border-radius: 2px;
+    margin: 0 auto 20px;
+  }
+
+  // Vertical timeline inside the sheet
+  .timeline-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 16px;
+      bottom: 16px;
+      width: 2px;
+      background: $gray-200;
+      z-index: 0;
+    }
+
+    .tl-step {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 0 0 24px;
+      position: relative;
+      z-index: 1;
+
+      &:last-child { padding-bottom: 0; }
+
+      &.done .tl-dot {
+        background: rgba($primary, 0.15);
+        color: $primary;
+        border-color: $primary;
+      }
+      &.current .tl-dot {
+        background: $primary;
+        color: $white;
+        border-color: $primary;
+        box-shadow: 0 0 0 4px rgba($primary, 0.15);
+      }
+      &.upcoming .tl-dot {
+        background: $white;
+        color: $gray-400;
+        border-color: $gray-300;
+      }
+    }
+
+    .tl-dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid $gray-300;
+      background: $white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+
+    .tl-info {
+      padding-top: 4px;
+
+      .tl-label {
+        font-size: 14px;
+        font-weight: $fw-semibold;
+        color: $gray-900;
+        margin-bottom: 2px;
+      }
+
+      .tl-sub {
+        font-size: 12px;
+        color: $gray-500;
+      }
+    }
+  }
+
+  // Mobile action dropdown
+  .mobile-action-dropdown {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 6px);
+    background: $white;
+    border: 1px solid $gray-200;
+    border-radius: $radius-md;
+    box-shadow: 0 8px 24px rgba($secondary, 0.12);
+    z-index: 100;
+    min-width: 160px;
+    overflow: hidden;
+    display: none;
+
+    &.open { display: block; }
+
+    a, button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: $fw-medium;
+      color: $gray-700;
+      background: none;
+      border: none;
+      text-decoration: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s;
+
+      i { font-size: 15px; color: $gray-400; }
+      &:hover { background: $gray-100; }
+
+      &.danger { color: $danger; i { color: $danger; } }
+    }
+
+    hr { margin: 4px 0; border-color: $gray-200; }
+  }
+}

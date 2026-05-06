@@ -1,0 +1,112 @@
+// ================================================================
+//  _pagination.scss — Arrow Pagination (Design System Refactor)
+// ================================================================
+
+.arrow-pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.arrow-pagination-list {
+  display: flex;
+  gap: var(--space-sm, 8px);
+
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.arrow-item {
+  display: flex;
+
+  &.active {
+    .page-link {
+      background-color: $primary;
+      border-color: $primary;
+
+      img {
+        filter: brightness(0) invert(1);
+      }
+    }
+  }
+
+  &.disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+
+    .page-link {
+      background-color: $gray-100;
+      border-color: $gray-200;
+    }
+
+    img {
+      opacity: 0.35;
+    }
+  }
+}
+
+
+// ─── Page Link ──────────────────────────────────────────────────
+
+.page-link {
+  width: 40px;
+  height: 40px;
+
+  border-radius: $radius-sm;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: $white;
+  border: 1px solid $gray-200;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+
+  &:hover {
+    background-color: $primary;
+    border-color: $primary;
+
+    img {
+      filter: brightness(0) invert(1);
+    }
+  }
+}
+
+
+// Icon inside link
+.page-link img {
+  width: 16px;
+  height: 16px;
+
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+
+// ─── Page Number Chip ──────────────────────────────────────────
+
+.page-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 64px;
+  height: 40px;
+  padding: 0 var(--space-md, 14px);
+
+  border-radius: $radius-sm;
+
+  background: $white;
+  border: 1px solid $gray-200;
+
+  font-size: $text-sm;
+  font-weight: $fw-semibold;
+  line-height: $line-height-normal;
+  color: $secondary;
+
+  white-space: nowrap;
+  user-select: none;
+}

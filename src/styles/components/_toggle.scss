@@ -1,0 +1,40 @@
+// ================================================================
+//  _toggle.scss — Toggle Switch Component
+//  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//  Usage:
+//    <div class="toggle-track [on]">
+//      <div class="toggle-thumb"></div>
+//    </div>
+//  Add .on to .toggle-track to activate (green + thumb slides right)
+// ================================================================
+
+.toggle-track {
+  position: relative;
+  width: 40px;
+  height: 22px;
+  background: $gray-300;
+  border-radius: 11px;
+  cursor: pointer;
+  transition:  all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+
+  &.on {
+    background: $primary;
+  }
+
+  .toggle-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 18px;
+    height: 18px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  }
+
+  &.on .toggle-thumb {
+    transform: translateX(18px);
+  }
+}

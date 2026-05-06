@@ -1,0 +1,165 @@
+.tab-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.tab-pill {
+  padding: 7px 16px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  color: $gray-600;
+  background: $white;
+  border: 1.5px solid $border-color;
+  cursor: pointer;
+  transition:  all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    border-color: var(--bs-secondary-color);
+    color: $secondary-800;
+  }
+
+  &.active {
+    background: $secondary-800;
+    border-color: $secondary-800;
+    color: #fff;
+  }
+}
+
+.custom-tabs {
+  background: $card-bg;
+  padding: 6px;
+  border-radius: 10px;
+  display: flex;
+  gap: 6px;
+  width: fit-content;
+}
+
+// Base tab style
+.custom-tab {
+  position: relative;
+  border: none;
+  background: transparent;
+  padding: 10px 16px;
+  border-radius: 8px;
+  color: $gray-700;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &:hover {
+    background: rgba(255,255,255,0.6);
+  }
+
+  // Badge inside tab
+  .badge {
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-weight: 500;
+    background: $gray-300;
+    color: $gray-700;
+  }
+}
+
+
+// Bottom bar
+.custom-tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 12px;
+  right: 12px;
+  height: 3px;
+  border-radius: 2px;
+}
+
+// INFO TAB
+.tab-info.active {
+  color: $info-text;
+  background-color: white;
+
+  &::after {
+    background: $info;
+  }
+
+  .badge {
+    background: $info-bg-subtle;
+    color: $info-text;
+  }
+}
+
+.tab-neutral.active {
+  color: $gray-900;
+  background-color: white;
+
+  &::after {
+    background: $gray-600;
+  }
+
+  .badge {
+    background: $gray-200;
+    color: $gray-700;
+    border-color: $gray-300;
+  }
+}
+
+// SUCCESS TAB
+.tab-success.active {
+  color: $success-text;
+  background-color: white;
+
+  &::after {
+    background: $success;
+  }
+
+  .badge {
+    background: $success-bg-subtle;
+    color: $success-text;
+  }
+}
+
+// WARNING TAB
+.tab-warning.active {
+  color: $warning-text;
+  background-color: white;
+
+  &::after {
+    background: $warning;
+  }
+
+  .badge {
+    background: $warning-bg-subtle;
+    color: $warning-text;
+  }
+}
+
+// PRIMARY TAB (uses your main blue)
+.tab-primary.active {
+  color: $primary-hover;
+  background-color: white;
+
+  &::after {
+    background: $primary;
+  }
+
+  .badge {
+    background: rgba(27, 132, 231, 0.1);
+    color: $primary-hover;
+  }
+}
+
+.custom-tab {
+  transition: all 0.25s ease, transform 0.15s ease;
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+

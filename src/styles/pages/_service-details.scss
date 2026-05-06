@@ -1,0 +1,353 @@
+// _service-details.scss — Service details page
+
+.sd-sidebar-sticky {
+  position: sticky;
+  top: 88px;
+}
+
+// ─── Two-column hero layout ───────────────────────────────────────────────────
+
+.sd-hero-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-lg;
+}
+
+.sd-hero-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.sd-hero-right {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 14px;
+}
+
+.sd-hero-badges {
+  display: flex;
+  gap: $space-sm;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.section-title {
+  font-size: $text-2xl;
+  font-weight: $fw-bold;
+  color: $secondary;
+  margin-bottom: 6px;
+}
+
+.section-title-sm {
+  font-size: $text-xl;
+  font-weight: $fw-bold;
+  color: $secondary;
+  margin-bottom: 6px;
+}
+
+.section-dsc,
+.section-dsc-sm {
+  font-size: $text-md;
+  color: $text-muted;
+  margin: 0;
+}
+
+// ─── Meta strip ───────────────────────────────────────────────────────────────
+
+.sd-meta-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-sm;
+}
+
+.sd-meta-item {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  padding: $space-sm 14px;
+  background: $white;
+  border: 1px solid $primary-100;
+  border-radius: $radius-md;
+  white-space: nowrap;
+
+  i {
+    font-size: $text-md2;
+    color: $primary;
+    flex-shrink: 0;
+  }
+
+  small {
+    font-size: $text-2xs;
+    color: $text-muted;
+    display: block;
+    line-height: $line-height-snug;
+  }
+
+  strong {
+    font-size: $text-xs2;
+    font-weight: $fw-bold;
+    color: $secondary;
+    display: block;
+    line-height: $line-height-snug;
+  }
+}
+
+// ─── Required documents ───────────────────────────────────────────────────────
+
+.sd-doc-list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-md;
+}
+
+.sd-doc-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.sd-doc-num {
+  width: 32px;
+  height: 32px;
+  border-radius: $radius-sm;
+  background: $white;
+  border: 1px solid $gray-300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $text-xs;
+  font-weight: $fw-bold;
+  color: $gray-600;
+  flex-shrink: 0;
+}
+
+.sd-doc-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.sd-doc-required {
+  flex-shrink: 0;
+}
+
+.sd-doc-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-sm;
+  background: $warning-bg-subtle;
+  border: 1px solid $warning-border-subtle;
+  border-radius: $radius-md;
+  padding: 12px 14px;
+  margin-top: $space-sm;
+
+  > i {
+    font-size: $text-md;
+    color: $warning;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  p {
+    font-size: $text-xs2;
+    color: $gray-600;
+    margin: 0;
+    line-height: $line-height-normal;
+
+    strong { color: $warning; }
+  }
+}
+
+// ─── Service centers ─────────────────────────────────────────────────────────
+
+.sd-center-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: $space-md 0;
+  border-bottom: 1px solid $gray-200;
+
+  &:last-child  { border-bottom: none; padding-bottom: 0; }
+  &:first-child { padding-top: 0; }
+}
+
+.sd-center-info {
+  flex: 1;
+  min-width: 0;
+
+  h5 {
+    font-size: $text-sm;
+    font-weight: $fw-semibold;
+    color: $secondary;
+    margin-bottom: $radius-xs;
+  }
+
+  p {
+    font-size: $text-xs;
+    color: $text-muted;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: $radius-xs;
+    line-height: $line-height-normal;
+
+    &.text-tertiary { color: $text-tertiary; }
+  }
+}
+
+.sd-center-actions {
+  flex-shrink: 0;
+}
+
+// ─── Booking sidebar card ─────────────────────────────────────────────────────
+
+.sd-book-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 20px;
+  border: 1px solid rgba($primary, 0.2);
+  border-radius: $radius-md;
+  overflow: hidden;
+  background: $white;
+}
+
+.sd-book-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $space-sm 14px;
+  border-bottom: 1px solid rgba($primary, 0.12);
+  font-size: $text-sm;
+
+  &:last-child { border-bottom: none; }
+
+  .info-label { gap: $radius-xs; }
+
+  img { padding-bottom: 2px; }
+}
+
+.sd-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-sm;
+  background: $white;
+  border: 1px solid $primary-100;
+  border-radius: $radius-md;
+  padding: 12px 14px;
+  margin-top: $radius-xs;
+
+  p {
+    font-size: $text-xs;
+    color: $gray-700;
+    margin: 0;
+    line-height: $line-height-normal;
+  }
+}
+
+// ─── Related services ─────────────────────────────────────────────────────────
+
+.sd-related-item {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  padding: $space-sm 0;
+  border-bottom: 1px solid $gray-200;
+  text-decoration: none;
+  transition: padding-left 0.2s;
+
+  &:last-child { border-bottom: none; }
+
+  &:hover {
+    padding-left: $radius-xs;
+    .sd-related-text strong { color: $primary; }
+  }
+}
+
+.sd-related-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: $radius-sm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  &.icon-blue {
+    background: rgba($primary, 0.1);
+    i { color: $primary; }
+  }
+}
+
+.sd-related-text {
+  flex: 1;
+  min-width: 0;
+
+  strong {
+    font-size: $text-xs2;
+    font-weight: $fw-semibold;
+    color: $secondary;
+    display: block;
+    margin-bottom: 1px;
+    transition: color 0.2s;
+  }
+
+  span {
+    font-size: $text-2xs;
+    color: $text-muted;
+  }
+}
+
+.sd-related-arrow {
+  font-size: $text-xs;
+  color: $gray-400;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+
+  .sd-related-item:hover & {
+    transform: translateX(2px);
+  }
+}
+
+// ─── Footer ───────────────────────────────────────────────────────────────────
+
+.sd-footer {
+  background: $gray-100;
+  border-top: 1px solid $gray-300;
+  padding: $space-md 0;
+  text-align: center;
+  font-size: $text-xs;
+  color: $text-muted;
+}
+
+// ─── Responsive ───────────────────────────────────────────────────────────────
+
+@media (max-width: 991.98px) {
+  .sd-sidebar-sticky { position: static; }
+
+  .sd-page-card { padding: $space-md-lg; }
+
+  .sd-hero-layout {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .sd-hero-right {
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .sd-hero-badges  { justify-content: flex-start; }
+  .sd-meta-strip   { width: 100%; }
+}
+
+@media (max-width: 575.98px) {
+  .sd-doc-item {
+    flex-wrap: wrap;
+
+    .sd-doc-required { margin-left: 46px; }
+  }
+
+  .sd-center-item { flex-wrap: wrap; }
+}

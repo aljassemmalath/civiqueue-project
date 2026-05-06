@@ -1,0 +1,67 @@
+@import "palette";
+@import "tokens";
+
+// =======================
+// BOOTSTRAP OVERRIDES
+// =======================
+
+@import "../node_modules/bootstrap/scss/functions";
+
+// Colors
+$primary: $color-brand;
+$secondary: $neutral-600;
+$success: $color-success;
+$danger: $color-danger;
+$warning: $color-warning;
+$info: $color-info;
+$light: $bg-subtle;
+$dark: $secondary-800;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "danger": $danger,
+  "warning": $warning,
+  "info": $info,
+  "light": $light,
+  "dark": $dark
+);
+
+// Body
+$body-bg: $bg-page;
+$body-color: $text-body;
+
+// Typography
+$font-family-sans-serif: $font-family-base;
+
+// Borders
+$border-color: $border-color;
+
+// Radius
+$border-radius-sm: $radius-sm;
+$border-radius: $radius-md;
+$border-radius-lg: $radius-lg;
+$border-radius-xl: $radius-xl;
+
+// Shadows
+$box-shadow-sm: $shadow-sm;
+$box-shadow: $shadow-soft;
+$box-shadow-lg: $shadow-lg;
+
+// Inputs / focus
+$input-btn-focus-box-shadow: 0 0 0 0.25rem rgba($color-brand, 0.15);
+$input-focus-border-color: $border-color-focus;
+$input-focus-box-shadow: 0 0 0 0.25rem rgba($color-brand, 0.15);
+
+// Links
+$link-color: $text-brand;
+$link-hover-color: $interactive-primary-hover;
+
+:root {
+  --bs-body-bg: #{$bg-page};
+  --bs-body-color: #{$text-body};
+  --bs-border-color: #{$border-color};
+}
+
+@import "../node_modules/bootstrap/scss/bootstrap";

@@ -1,0 +1,281 @@
+// ─── Wizard ───────────────────────────────────────────────────────────────────
+
+.wizard-panel {
+  display: none;
+  animation: wizardFadeIn 0.3s ease;
+
+  &.active { display: block; }
+}
+
+@keyframes wizardFadeIn {
+  from { opacity: 0; transform: translateY($space-sm); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.wizard-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 24px;
+  margin-top: $space-lg;
+  border-top: 1px solid $border-color;
+
+  @media (max-width: 575.98px) {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1050;
+    margin-top: 0;
+    padding: $space-sm $space-md;
+    background: $white;
+    border-top: 1px solid $gray-200;
+    box-shadow: 0 -$radius-xs $space-md rgba($secondary, 0.08);
+
+    .btn { flex: 1; }
+  }
+}
+
+// ─── Vertical Stepper ─────────────────────────────────────────────────────────
+
+.v-step-label {
+  display: flex;
+  flex-direction: column;
+  gap: $radius-xs;
+}
+
+.v-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.v-step-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.v-step-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid $gray-300;
+  background: $white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $text-xs2;
+  font-weight: $fw-bold;
+  color: $gray-400;
+  position: relative;
+  transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+}
+
+.v-step-check { display: none; font-size: $text-xs2; }
+.v-step-num   { display: block; }
+
+.v-step-line {
+  width: 2px;
+  height: 44px;
+  background: $gray-200;
+  border-radius: $radius-xs;
+  transition: background 0.3s ease;
+}
+
+.v-step:last-child .v-step-line { display: none; }
+
+.trust {
+  padding-top: 7px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.v-step-title {
+  font-size: $text-xs2;
+  font-weight: $fw-semibold;
+  color: $gray-400;
+  line-height: $line-height-snug;
+  transition: color 0.3s ease;
+}
+
+.v-step-sub {
+  font-size: $text-2xs;
+  color: $gray-400;
+  line-height: $line-height-snug;
+  transition: color 0.3s ease;
+}
+
+// Active state
+.v-step.active {
+  .v-step-dot {
+    border-color: rgba($primary, 0.4);
+    background: $white;
+    color: $primary;
+    box-shadow: 0 0 0 3px rgba($primary, 0.12);
+  }
+
+  .v-step-title { color: $primary; }
+  .v-step-sub   { color: $gray-500; }
+}
+
+// Done state
+.v-step.done {
+  .v-step-dot {
+    border: none;
+    background: rgba($primary, 0.4);
+    color: $white;
+    box-shadow: none;
+  }
+
+  .v-step-num   { display: none; }
+  .v-step-check { display: block; }
+
+  .v-step-line  { background: rgba($primary, 0.4); }
+  .v-step-title { color: $gray-700; }
+  .v-step-sub   { color: $gray-500; }
+}
+
+// ─── Mobile Stepper ───────────────────────────────────────────────────────────
+
+.v-step-mobile {
+  padding: $radius-xs 0 20px;
+}
+
+.v-step-mobile-dot {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: $primary;
+  color: $white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $text-md;
+  font-weight: $fw-bold;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 5px rgba($primary, 0.12);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+
+  &.done {
+    background: rgba($primary, 0.4);
+    box-shadow: 0 0 0 5px rgba($success, 0.12);
+
+    .v-step-mobile-num   { display: none; }
+    .v-step-mobile-check { display: block; }
+  }
+}
+
+.v-step-mobile-check { display: none; font-size: $text-md; }
+.v-step-mobile-num   { display: block; }
+
+.v-step-mobile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.v-step-mobile-counter {
+  font-size: $text-2xs;
+  font-weight: $fw-semibold;
+  color: $gray-500;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  line-height: 1;
+}
+
+.v-step-mobile-title {
+  font-size: $text-md;
+  font-weight: $fw-bold;
+  color: $primary;
+  line-height: $line-height-snug;
+}
+
+// ─── Booking layout (tablet/mobile) ──────────────────────────────────────────
+
+@media (max-width: 991.98px) {
+  .booking-layout {
+    flex-direction: column;
+    gap: 0;
+    padding: $space-md 0 48px;
+  }
+
+  .booking-stepper {
+    width: 100%;
+    position: static;
+    order: -1;
+  }
+
+  .booking-panels {
+    width: 100%;
+  }
+}
+
+// ─── Progress Timeline ────────────────────────────────────────────────────────
+
+.progress-timeline {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  margin-top: $space-sm;
+}
+
+.progress-step {
+  flex: 1;
+  text-align: center;
+  position: relative;
+
+  .step-dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid $gray-300;
+    background: $white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 6px;
+    font-size: $text-xs2;
+    font-weight: $fw-bold;
+    color: $gray-400;
+    position: relative;
+    transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+  }
+
+  &.done .step-dot {
+    border: none;
+    background: rgba($primary, 0.4);
+    color: $white;
+    box-shadow: none;
+  }
+
+  &.current .step-dot {
+    border-color: rgba($primary, 0.4);
+    background: $white;
+    color: $primary;
+    box-shadow: 0 0 0 3px rgba($primary, 0.12);
+  }
+
+  &:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 13px;
+    left: calc(50% + 18px);
+    right: calc(-50% + 18px);
+    height: 2.5px;
+    background: $border-color;
+  }
+
+  &.done:not(:last-child)::after { background: $primary; }
+
+  .step-label {
+    font-size: $text-2xs;
+    color: $gray-600;
+    font-weight: $fw-medium;
+  }
+
+  &.done    .step-label { color: $primary; }
+  &.current .step-label { color: $primary; font-weight: $fw-semibold; }
+}

@@ -1,0 +1,286 @@
+.form-label {
+  @include fluid-text("sm", "medium", "text");
+  color: $text-primary;
+}
+
+// ───────────────────────────────────────────────
+// Dropdown (legacy Bootstrap override cleaned)
+// ───────────────────────────────────────────────
+
+.dropdown {
+  width: 100%;
+
+  &-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 10px 16px;
+
+    background-color: $white;
+    border: 1px solid $border-color;
+    border-radius: $radius-sm;
+
+    font-size: $text-sm;
+    font-weight: $fw-medium;
+    color: $gray-400;
+
+    cursor: pointer;
+    box-sizing: border-box;
+
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+
+    &::after {
+      display: none;
+    }
+
+    &:hover {
+      border-color: $gray-300;
+
+      &:not(.selected) {
+        color: $text-primary;
+      }
+    }
+
+    &.selected {
+      color: $text-primary;
+      background-color: $white;
+    }
+
+    &:active {
+      background-color: $gray-100;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px $primary-50, inset 0 -2px 0 0 $primary;
+      border-color: $border-color;
+    }
+
+    &.show .dropdown-icon {
+      transform: rotate(180deg);
+    }
+  }
+
+  &-menu {
+    width: 100%;
+  }
+
+  &-icon {
+    transition: transform 0.3s ease;
+  }
+}
+
+// ───────────────────────────────────────────────
+// Helpers
+// ───────────────────────────────────────────────
+
+.custom-dropdown-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.required::after {
+  content: " *";
+  color: $danger;
+}
+
+// ───────────────────────────────────────────────
+// Input (filled variant)
+// ───────────────────────────────────────────────
+
+.form-input-filled {
+  width: 100%;
+  padding: 10px 14px;
+
+  border: 1px solid $border-color;
+  border-radius: $radius-sm;
+
+  font-size: $text-sm;
+  color: $gray-800;
+
+  background: $gray-100;
+
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &::placeholder {
+    color: $input-placeholder-color;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px $primary-50, inset 0 -2px 0 0 $primary;
+    border-color: $border-color;
+  }
+
+  &:read-only {
+    background: $gray-100;
+    color: $gray-600;
+    cursor: not-allowed;
+  }
+}
+
+// ───────────────────────────────────────────────
+// Standard form control
+// ───────────────────────────────────────────────
+
+.form-control {
+  padding: 10px 16px;
+
+  border: 1px solid $border-color;
+  border-radius: $radius-sm;
+
+  background-color: $white;
+
+  color: $text-primary;
+  font-size: $text-sm;
+  font-weight: $fw-regular;
+
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &::placeholder {
+    color: $input-placeholder-color;
+  }
+
+  &:hover {
+    border-color: $gray-300;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px $primary-50, inset 0 -2px 0 0 $primary;
+    border-color: $border-color;
+  }
+}
+
+// ───────────────────────────────────────────────
+// Search input
+// ───────────────────────────────────────────────
+
+.search-bar {
+  position: relative;
+  width: 100%;
+
+  .search-input {
+    padding: 10px 40px 10px 16px;
+  }
+
+  .search-suffix {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+
+    img {
+      width: 18px;
+      height: 18px;
+    }
+
+    .icon-active {
+      display: none;
+    }
+  }
+
+  &:focus-within {
+    .icon-default {
+      display: none;
+    }
+
+    .icon-active {
+      display: block;
+    }
+  }
+}
+
+// ───────────────────────────────────────────────
+// Date field (cleaned + tokenized)
+// ───────────────────────────────────────────────
+
+.date-field-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 12px 14px;
+
+  background-color: $white;
+  border: 1px solid $border-color;
+  border-radius: $radius-sm;
+
+  cursor: pointer;
+
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    border-color: $gray-300;
+  }
+
+  &:focus-within {
+    box-shadow: 0 0 0 3px $primary-50, inset 0 -2px 0 0 $primary;
+    border-color: $border-color;
+  }
+
+  .date-trigger-icon {
+    font-size: $text-sm;
+    color: $gray-500;
+    pointer-events: none;
+  }
+
+  .date-display-text {
+    flex: 1;
+
+    font-size: $text-sm;
+    font-weight: $fw-regular;
+
+    color: $input-placeholder-color;
+
+    pointer-events: none;
+    line-height: 1;
+
+    &.has-value {
+      color: $text-primary;
+      font-weight: $fw-medium;
+    }
+  }
+
+  .date-native-input {
+    position: absolute;
+    inset: 0;
+
+    opacity: 0;
+    cursor: pointer;
+
+    border: none;
+    background: transparent;
+
+    font-family: inherit;
+
+    &::-webkit-calendar-picker-indicator {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+  }
+}
+
+.field-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 6px;
+  font-size: 12px;
+  color: $gray-500;
+  font-style: italic;
+
+  i { font-size: 11px; }
+}

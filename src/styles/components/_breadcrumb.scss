@@ -1,0 +1,46 @@
+.breadcrumb {
+  padding: 0;
+  margin: 0 0 8px;
+  font-size: $text-xs;
+  background: none;
+
+  a {
+    color: $gray-500;
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $secondary;
+    }
+  }
+
+  .breadcrumb-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &::before {
+      content: none;
+    }
+
+    &::after {
+      content: "›";
+      font-size: $text-xl;
+      color: $gray-500;
+    }
+
+    &:last-child::after {
+      display: none;
+    }
+
+    &.active {
+      color: $gray-700;
+      font-weight: $fw-semibold;
+    }
+  }
+}
+
+.breadcrumb-header {
+  background: $secondary-50;
+  padding-top: 8px;
+}

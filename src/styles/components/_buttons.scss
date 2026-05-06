@@ -1,0 +1,193 @@
+@mixin btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: $radius-sm;
+  font-size: $text-sm;
+  font-weight: $fw-medium;
+  line-height: $line-height-normal;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+  border: 1px solid transparent;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+}
+
+
+
+@mixin btn-filled($bg, $hover, $active, $color: $white, $ring: $bg) {
+  background-color: $bg;
+  color: $color;
+
+  &:hover:not(:disabled):not(.disabled) {
+    background-color: $hover;
+    transform: translateY(-1px);
+    box-shadow: $shadow-brand-sm;
+  }
+
+  &:active:not(:disabled):not(.disabled),
+  &.active {
+    background-color: $active;
+    transform: none;
+    box-shadow: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $ring;
+    outline-offset: 2px;
+  }
+
+  &:disabled,
+  &.disabled {
+    background-color: $gray-200;
+    border-color: $gray-300;
+    color: $gray-500;
+    pointer-events: none;
+    box-shadow: none;
+  }
+}
+
+
+
+@mixin btn-outline($color, $bg-hover, $bg-active, $ring: $color) {
+  background: transparent;
+  color: $color;
+  border: 1px solid rgba($color, 0.1);
+
+  &:hover:not(:disabled):not(.disabled) {
+    background-color: $bg-hover;
+    transform: translateY(-1px);
+    box-shadow: $shadow-brand-sm;
+  }
+
+  &:active:not(:disabled):not(.disabled),
+  &.active {
+    background-color: $bg-active;
+    transform: none;
+    box-shadow: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $ring;
+    outline-offset: 2px;
+  }
+
+  &:disabled,
+  &.disabled {
+    color: $gray-500;
+    border-color: $gray-300;
+    background: transparent;
+  }
+}
+
+@mixin btn-ghost($color, $bg-hover, $bg-active, $ring: $color) {
+  background: transparent;
+  color: $color;
+
+  &:hover:not(:disabled):not(.disabled) {
+    background: $bg-hover;
+  }
+
+  &:active:not(:disabled):not(.disabled) {
+    background: $bg-active;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $ring;
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    color: $gray-500;
+  }
+}
+
+
+@mixin btn-color($name, $base, $hover, $active, $bg-50, $bg-100, $ring) {
+  .btn-#{$name}         { @include btn-filled($base, $hover, $active, $white, $ring); }
+  .btn-outline-#{$name} { @include btn-outline($base, $bg-50, $bg-100, $ring); }
+  .btn btn-ghost-#{$name}   { @include btn-ghost($base, $bg-50, $bg-100, $ring); }
+}
+
+.btn {
+  @include btn-base;
+  padding: 10px 16px;
+
+  &-sm { padding: 6px 12px; font-size: $text-xs; }
+  &-md { padding: 8px 20px; }
+  &-lg { padding: 12px 24px; font-size: $text-md; }
+  &-xl { padding: 12px 16px; font-size: $text-md; }
+
+  &-block { width: 100%; }
+
+  &-icon    { width: 40px; height: 40px; padding: 0; }
+  &-icon-sm { width: 32px; height: 32px; padding: 0; }
+  &-icon-lg { width: 48px; height: 48px; padding: 0; }
+}
+
+
+@include btn-color('primary',
+  $primary, $primary-hover, $primary-pressed,
+  $primary-50, $primary-100, $primary-200
+);
+
+@include btn-color('secondary',
+  $secondary, $secondary-hover, $secondary-pressed,
+  $secondary-50, $secondary-100, $secondary-200
+);
+
+
+@include btn-color('danger',
+  #DC2626, #B91C1C, #991B1B,
+  #FEE2E2, #FECACA, #FCA5A5
+);
+
+
+.btn-neutral {
+  @include btn-filled($gray-200, $gray-300, $gray-400, $gray-800, $gray-300);
+}
+
+.btn-outline-neutral {
+  @include btn-outline($text-primary, $gray-100, $gray-200, $gray-300);
+}
+
+.btn btn-ghost-neutral {
+  @include btn-ghost($text-primary, $gray-100, $gray-200, $gray-300);
+}
+
+
+.btn-white {
+  background: rgba($white, 0.2);
+  backdrop-filter: blur(40px);
+  color: $white;
+  border: 1px solid rgba($white, 0.6);
+
+  &:hover { background: rgba($white, 0.32); }
+}
+
+.topbar-btn {
+  width: 36px;
+   height: 36px; 
+   border-radius: $radius-sm; 
+   border: 1px solid $gray-200; 
+   background: $white; 
+   color: $gray-600; 
+   font-size: $text-md; 
+   display: inline-flex; 
+   align-items: center; 
+   justify-content: center; 
+   position: relative; 
+   &:hover { 
+    border-color: $gray-300; 
+    color: $secondary;
+
+   }
+  }

@@ -1,0 +1,97 @@
+// ================================================================
+//  _padding&margin.scss
+//  Utility class generation only.
+//  The $breakpoints, $custom-spacing, $custom-margin maps and
+//  $space-* scalar aliases are defined in _variables.scss so
+//  ALL component files can use them.
+// ================================================================
+
+
+// ── Padding utilities ─────────────────────────────────────────
+@each $size, $value in $custom-spacing {
+  .p-#{$size}  { padding: $value !important; }
+  .pt-#{$size} { padding-top: $value !important; }
+  .pb-#{$size} { padding-bottom: $value !important; }
+  .pl-#{$size} { padding-left: $value !important; }
+  .pr-#{$size} { padding-right: $value !important; }
+  .px-#{$size} { padding-left: $value !important; padding-right: $value !important; }
+  .py-#{$size} { padding-top: $value !important; padding-bottom: $value !important; }
+}
+
+// Responsive padding utilities  (.p-lg-md, .pt-xl-sm, …)
+@each $breakpoint, $breakvalue in $breakpoints {
+  @media (min-width: $breakvalue) {
+    @each $size, $value in $custom-spacing {
+      .p-#{$breakpoint}-#{$size}  { padding: $value !important; }
+      .pt-#{$breakpoint}-#{$size} { padding-top: $value !important; }
+      .pb-#{$breakpoint}-#{$size} { padding-bottom: $value !important; }
+      .pl-#{$breakpoint}-#{$size} { padding-left: $value !important; }
+      .pr-#{$breakpoint}-#{$size} { padding-right: $value !important; }
+      .px-#{$breakpoint}-#{$size} { padding-left: $value !important; padding-right: $value !important; }
+      .py-#{$breakpoint}-#{$size} { padding-top: $value !important; padding-bottom: $value !important; }
+    }
+  }
+}
+
+
+// ── Margin utilities ──────────────────────────────────────────
+@each $size, $value in $custom-margin {
+  .m-#{$size}  { margin: $value !important; }
+  .mt-#{$size} { margin-top: $value !important; }
+  .mb-#{$size} { margin-bottom: $value !important; }
+  .ml-#{$size} { margin-left: $value !important; }
+  .mr-#{$size} { margin-right: $value !important; }
+  .mx-#{$size} { margin-left: $value !important; margin-right: $value !important; }
+  .my-#{$size} { margin-top: $value !important; margin-bottom: $value !important; }
+
+  // Responsive margin utilities  (.mt-xl-lg, .mx-md-sm, …)
+  @each $breakpoint, $bp-value in $breakpoints {
+    @media (min-width: $bp-value) {
+      .m-#{$size}-#{$breakpoint}  { margin: $value !important; }
+      .mt-#{$size}-#{$breakpoint} { margin-top: $value !important; }
+      .mb-#{$size}-#{$breakpoint} { margin-bottom: $value !important; }
+      .ml-#{$size}-#{$breakpoint} { margin-left: $value !important; }
+      .mr-#{$size}-#{$breakpoint} { margin-right: $value !important; }
+      .mx-#{$size}-#{$breakpoint} { margin-left: $value !important; margin-right: $value !important; }
+      .my-#{$size}-#{$breakpoint} { margin-top: $value !important; margin-bottom: $value !important; }
+    }
+  }
+}
+
+
+// ── Layout helpers ────────────────────────────────────────────
+
+// Responsive container — grows margins with screen size
+.container {
+  max-width: none !important;
+  width: auto !important;
+  margin-left: $space-md;
+  margin-right: $space-md;
+
+  @each $breakpoint, $bp-value in $breakpoints {
+    @if map-has-key($custom-margin, $breakpoint) {
+      @media (min-width: $bp-value) {
+        margin-left: map-get($custom-margin, $breakpoint);
+        margin-right: map-get($custom-margin, $breakpoint);
+      }
+    }
+  }
+}
+
+// Full-width section wrapper — grows padding with screen size
+.auto-padding {
+  max-width: none;
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: $space-md;
+  padding-right: $space-md;
+
+  @each $breakpoint, $bp-value in $breakpoints {
+    @if map-has-key($custom-margin, $breakpoint) {
+      @media (min-width: $bp-value) {
+        padding-left: map-get($custom-margin, $breakpoint);
+        padding-right: map-get($custom-margin, $breakpoint);
+      }
+    }
+  }
+}

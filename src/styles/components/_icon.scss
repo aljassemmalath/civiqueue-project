@@ -1,0 +1,43 @@
+.card-icon {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  padding: 10px;
+  border: 1px solid $border-color;
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
+
+
+  // &-primary {
+  //   background: linear-gradient(135deg, $white 0%, $primary-100 100%);
+  //   // border-color: $primary-200;
+  // }
+
+  // &-secondary {
+  //   background: linear-gradient(135deg, $white 0%, $secondary-100 100%);
+  //   // border-color: $secondary-200;
+  // }
+
+  // &-success {
+  //   background: linear-gradient(135deg, $white 0%, #D9F7EA 100%);
+  //   // border-color: $success-border-subtle;
+  // }
+
+  // &-warning {
+  //   background: linear-gradient(135deg, $white 0%, #FEF3C7 100%);
+  //   // border-color: $warning-border-subtle;
+  // }
+
+  // &-danger {
+  //   background: linear-gradient(135deg, $white 0%, #FBD5DC 100%);
+  //   // border-color: $danger-border-subtle;
+  // }
+
+  // &-info {
+  //   background: linear-gradient(135deg, $white 0%, #E6E1FF 100%);
+  //   // border-color: $info-border-subtle;
+  // }
+}

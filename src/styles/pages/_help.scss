@@ -1,0 +1,435 @@
+// _help.scss — Help Center Page
+
+// ─── Hero ────────────────────────────────────────────────────────────────────
+
+.help-hero {
+  position: relative;
+  background: linear-gradient(160deg, $secondary 0%, $secondary 55%, darken($secondary-dark, 5%) 100%);
+  overflow: hidden;
+
+  .help-hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+}
+
+.help-hero-orb {
+  position: absolute;
+  border-radius: $radius-full;
+  opacity: 0.1;
+
+  &--1 {
+    width: 480px;
+    height: 480px;
+    background: $primary;
+    top: -140px;
+    right: -80px;
+  }
+
+  &--2 {
+    width: 280px;
+    height: 280px;
+    background: $white;
+    bottom: -60px;
+    left: 8%;
+  }
+}
+
+.help-hero-inner {
+  position: relative;
+  z-index: 1;
+  padding-top: 72px;
+  padding-bottom: 72px;
+  text-align: center;
+
+  h1 {
+    color: $white;
+    max-width: 600px;
+    margin: $space-md auto 20px;
+  }
+}
+
+.help-hero-sub {
+  color: rgba($white, 0.7);
+  max-width: 520px;
+  margin: 0 auto 28px;
+  text-align: center;
+  line-height: $line-height-relaxed;
+}
+
+// ─── Help Search ──────────────────────────────────────────────────────────────
+
+.help-search-wrap {
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.help-search-box {
+  display: flex;
+  align-items: center;
+  background: $white;
+  border-radius: $radius-lg;
+  padding: 6px 6px 6px $space-md;
+  box-shadow: $shadow-brand-md;
+  gap: $space-sm;
+}
+
+.help-search-icon {
+  color: $gray-500;
+  font-size: $text-md;
+  flex-shrink: 0;
+}
+
+.help-search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: $text-sm;
+  font-family: inherit;
+  color: $gray-900;
+  background: transparent;
+  padding: $space-sm 0;
+
+  &::placeholder {
+    color: $gray-500;
+  }
+}
+
+.help-search-btn {
+  padding: $space-sm 22px;
+  background: $primary;
+  color: $white;
+  border: none;
+  border-radius: $radius-md;
+  font-size: $text-sm;
+  font-weight: $fw-semibold;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+
+  &:hover {
+    background: $primary-hover;
+  }
+}
+
+.help-search-suggestions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $space-sm;
+  margin-top: 24px;
+  justify-content: center;
+
+  span {
+    font-size: $text-sm;
+    color: rgba($white, 0.65);
+  }
+}
+
+.help-tag {
+  padding: 5px 14px;
+  background: rgba($white, 0.15);
+  color: $white;
+  border: 1px solid rgba($white, 0.3);
+  border-radius: $radius-full;
+  font-size: $text-xs;
+  font-weight: $fw-medium;
+  cursor: pointer;
+  transition: background 0.15s;
+
+  &:hover {
+    background: rgba($white, 0.25);
+  }
+}
+
+// ─── Categories — horizontal scroll track ────────────────────────────────────
+
+.help-categories {
+  background: $body-bg;
+}
+
+.topic-track-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-md;
+}
+
+.topic-nav-btns {
+  display: flex;
+  gap: $space-sm;
+  flex-shrink: 0;
+}
+
+.topic-nav-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: $radius-md;
+  border: 1.5px solid $gray-200;
+  background: $white;
+  color: $secondary;
+  font-size: $text-sm;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: $shadow-xs;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, opacity 0.15s ease;
+
+  &:hover:not(:disabled) {
+    background: $primary-50;
+    border-color: $primary;
+    color: $primary;
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  &--side {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+
+    &-left  { left:  10px; }
+    &-right { right: 10px; }
+  }
+}
+
+.topic-track-wrap {
+  position: relative;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 96px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  &::before {
+    left: 0;
+    background: linear-gradient(to right, $body-bg 30%, transparent 100%);
+  }
+
+  &::after {
+    right: 0;
+    background: linear-gradient(to left, $body-bg 30%, transparent 100%);
+  }
+}
+
+.topic-track {
+  display: flex;
+  gap: $space-sm;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: $space-sm $radius-xs $space-md;
+  cursor: grab;
+  user-select: none;
+  margin: 0 48px;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar { display: none; }
+  &.is-dragging { cursor: grabbing; }
+}
+
+.topic-chip {
+  display: flex;
+  align-items: center;
+  gap: $space-sm;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  cursor: pointer;
+  background: $white;
+  border: 1.5px solid $gray-200;
+  border-radius: $radius-lg;
+  padding: 14px 20px 14px 14px;
+  text-decoration: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.18s ease, background 0.18s ease;
+
+  &:hover {
+    border-color: rgba($primary, 0.25);
+    background: $primary-50;
+    box-shadow: 0 6px 20px rgba($primary, 0.12);
+    transform: translateY(-3px);
+
+    .topic-chip-label { color: $primary; }
+    .topic-chip-icon  { transform: scale(1.12); }
+  }
+
+  &:active {
+    transform: translateY(-1px) scale(0.98);
+    box-shadow: 0 2px $space-sm rgba($primary, 0.1);
+  }
+
+  &-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: $radius-md;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+
+    &--primary   { background: rgba($primary, 0.1);   color: $primary; }
+    &--secondary { background: rgba($secondary, 0.1); color: $secondary; }
+    &--success   { background: $success-bg-subtle;    color: $success; }
+    &--info      { background: $info-bg-subtle;        color: $info; }
+    &--warning   { background: $warning-bg-subtle;     color: $warning; }
+    &--danger    { background: $danger-bg-subtle;      color: $danger; }
+    &--neutral   { background: $gray-200;              color: $gray-700; }
+  }
+
+  &:hover &-icon { transform: scale(1.1); }
+
+  &-label {
+    font-size: $text-sm;
+    font-weight: $fw-semibold;
+    color: $gray-700;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+  }
+}
+
+.topic-scroll-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin-top: $space-sm;
+  font-size: $text-xs;
+  color: $gray-400;
+  font-weight: $fw-medium;
+  transition: opacity 0.4s ease;
+
+  i {
+    font-size: $text-sm2;
+    animation: hint-bounce 1.8s ease-in-out infinite;
+  }
+
+  &.hidden { opacity: 0; pointer-events: none; }
+}
+
+@keyframes hint-bounce {
+  0%, 100% { transform: translateY(0); }
+  45%       { transform: translateY($radius-xs); }
+}
+
+// ─── FAQ Blocks ──────────────────────────────────────────────────────────────
+
+.help-faq {
+  background: $white;
+}
+
+.help-faq-block {
+  border: 1px solid $gray-200;
+  padding: $space-lg !important;
+  border-radius: $radius-2xl;
+  background-color: rgba($secondary, 0.04);
+}
+
+.help-faq-header {
+  display: flex;
+  align-items: center;
+  gap: $space-md;
+}
+
+.help-faq-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+
+  &--primary { background: rgba($primary, 0.1); }
+  &--success { background: $success-bg-subtle;  }
+  &--info    { background: $info-bg-subtle;      }
+  &--warning { background: $warning-bg-subtle;   }
+  &--danger  { background: $danger-bg-subtle;    }
+  &--white   { background: $white;               }
+}
+
+// ─── Contact ─────────────────────────────────────────────────────────────────
+
+.help-contact {
+  background: $body-bg;
+}
+
+.help-contact-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+
+  &--primary { background: rgba($primary, 0.1); color: $primary; }
+  &--success { background: $success-bg-subtle;  color: $success; }
+  &--info    { background: $info-bg-subtle;      color: $info; }
+}
+
+.help-contact-link {
+  font-size: $text-sm2;
+  font-weight: $fw-semibold;
+  color: $primary;
+  text-decoration: none;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  margin-bottom: 6px;
+
+  &:hover { text-decoration: underline; }
+}
+
+.help-contact-note {
+  font-size: $text-xs;
+  color: $gray-500;
+}
+
+// ─── Responsive ───────────────────────────────────────────────────────────────
+
+@media (max-width: 991.98px) {
+  .help-hero-inner {
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+
+  .help-contact-form-card {
+    padding: 28px 24px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .help-hero-inner h1 {
+    font-size: $display-xs;
+  }
+
+  .help-search-box {
+    flex-wrap: wrap;
+    gap: $space-sm;
+    padding: $space-sm;
+
+    .help-search-btn {
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  .topic-chip       { padding: 12px $space-md 12px 12px; }
+  .topic-chip-label { font-size: $text-xs2; }
+}

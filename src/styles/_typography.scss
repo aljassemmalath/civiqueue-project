@@ -1,0 +1,111 @@
+$font-family-base: 'Poppins', sans-serif;
+
+$line-height-tight:   1.25;
+$line-height-snug:    1.375;
+$line-height-normal:  1.5;
+$line-height-relaxed: 1.65;
+$line-height-loose:   2;
+
+$fw-light:    300;   // Poppins Light
+$fw-regular:  400;   // Poppins Regular
+$fw-medium:   500;   // Poppins Medium
+$fw-semibold: 600;   // Poppins SemiBold
+$fw-bold:     700;   // Poppins Bold
+
+$font-weights: (
+  "light":    $fw-light,
+  "regular":  $fw-regular,
+  "medium":   $fw-medium,
+  "semibold": $fw-semibold,
+  "bold":     $fw-bold
+);
+
+
+$text-2xs: 0.625rem;   // 10px
+$text-xs:  0.75rem;    // 12px
+$text-xs2: 0.8125rem; // 13px — small UI text (helper, meta)
+$text-md2: 1.0625rem; // 17px — slightly emphasized body / subtitles
+$text-sm:  0.875rem;   // 14px
+$text-sm2: 0.9375rem;   // 15px
+$text-md:  1rem;       // 16px
+$text-md2: 1.0625rem; // 17px — slightly emphasized body / subtitles
+$text-lg:  1.125rem;   // 18px
+$text-xl:  1.25rem;    // 20px
+$text-2xl: 1.5rem;     // 24px
+
+$display-xs: 1.5rem;   // 24px
+$display-sm: 1.875rem; // 30px
+$display-md: 2.25rem;  // 36px
+$display-lg: 3rem;     // 48px
+$display-xl: 3.75rem;  // 60px
+
+$text-sizes: (
+  "2xs": 0.625rem,
+  "xs":  0.75rem,
+  "xs2": 0.8125rem,  // 13px
+  "sm":  0.875rem,
+  "sm2": 0.9375rem,
+  "md":  1rem,
+  "md2": 1.0625rem,  // 17px
+  "lg":  1.125rem,
+  "xl":  1.25rem,
+  "2xl": 1.5rem
+);
+
+$display-sizes: (
+  "xs": 1.5rem,      // 24px — large card titles
+  "sm": 1.875rem,    // 30px — h2 / section headings
+  "md": 2.25rem,     // 36px — h1
+  "lg": 3rem,        // 48px — hero
+  "xl": 3.75rem,     // 60px — jumbo
+);
+
+// Sizes that should NOT scale down (already small enough)
+$static-text-sizes: ("2xs", "xs", "sm", "sm2");
+
+
+// ================================================================
+// 5. GENERATED UTILITY CLASSES
+// ================================================================
+
+// ── Text size classes  (.text-sm, .text-lg, .text-2xl …) ──────
+// Size only — pair with .fw-* for weight
+@each $name, $size in $text-sizes {
+  .text-#{$name} {
+    @if index($static-text-sizes, $name) {
+      font-size: $size;
+    } @else {
+      @include fluid-type($size, 0.95, 1.5);
+    }
+  }
+}
+
+// ── Display size classes  (.display-xs … .display-xl) ─────────
+@each $name, $size in $display-sizes {
+  .display-#{$name} {
+    @include fluid-type($size, 0.75, 1.5);
+    font-weight: $fw-bold;
+  }
+}
+
+// ── Font weight classes  (.fw-light … .fw-bold) ────────────────
+@each $name, $weight in $font-weights {
+  .fw-#{$name} {
+    font-weight: $weight !important;
+  }
+}
+
+
+// ================================================================
+// :root TYPOGRAPHY CSS CUSTOM PROPERTIES
+// ================================================================
+
+:root {
+  // ── Typography ───────────────────────────────────────────────
+  --font-family:         #{$font-family-base};
+  --line-height-tight:   #{$line-height-tight};
+  --line-height-snug:    #{$line-height-snug};
+  --line-height-normal:  #{$line-height-normal};
+  --line-height-relaxed: #{$line-height-relaxed};
+  --line-height-loose:   #{$line-height-loose};
+}

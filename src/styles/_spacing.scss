@@ -1,0 +1,228 @@
+// ================================================================
+//  _spacing.scss — CiviQueue Spacing, Radius & Shadow System
+//  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+//  1. Breakpoints map
+//  2. Spacing maps + scalar aliases + section aliases
+//  3. Radius tokens
+//  4. Shadow tokens
+//  5. :root CSS custom properties (spacing / radius / shadow)
+//  6. Utility class generation (padding, margin, container)
+//     — full content of _padding&margin.scss
+// ================================================================
+
+
+// ================================================================
+// 4. SPACING SYSTEM
+// ================================================================
+
+// Breakpoints
+$breakpoints: (
+  sm:  576px,
+  md:  768px,
+  lg:  992px,
+  xl:  1200px,
+  xxl: 1400px
+);
+
+// Padding
+$custom-spacing: (
+  xs:  0.25rem,  //  4px
+  sm:  0.5rem,   //  8px
+  md:  1rem,     // 16px
+  md-lg: 1.5rem,
+  lg:  2rem,     // 32px
+  xl:  4rem,     // 64px
+  xxl: 6rem,     // 96px
+  3xl: 8rem,     // 128px
+);
+
+
+
+// Page-level margin
+$custom-margin: (
+  sm:  1rem,   // 16px
+  md:  2rem,   // 32px
+  lg:  4rem,   // 64px
+  xl:  6rem,   // 96px
+  xxl: 8rem    // 128px
+);
+
+// ── Scalar aliases — use in component SCSS
+
+
+$space-xs:  map-get($custom-spacing, xs);   //  4px
+$space-sm:  map-get($custom-spacing, sm);   //  8px
+$space-md:  map-get($custom-spacing, md);   // 16px
+$space-md-lg: map-get($custom-spacing, md-lg); // 24px
+$space-lg:  map-get($custom-spacing, lg);   // 32px
+$space-xl:  map-get($custom-spacing, xl);   // 64px
+$space-xxl: map-get($custom-spacing, xxl);  // 96px
+$space-3xl: map-get($custom-spacing, 3xl);  // 128px
+
+//    Section/page-level margin tokens
+$section-sm:  map-get($custom-margin, sm);   // 16px
+$section-md:  map-get($custom-margin, md);   // 32px
+$section-lg:  map-get($custom-margin, lg);   // 64px
+$section-xl:  map-get($custom-margin, xl);   // 96px
+$section-xxl: map-get($custom-margin, xxl);  // 128px
+
+
+// ================================================================
+// 5. RADIUS TOKENS
+// ================================================================
+
+
+$radius-xs:   4px;
+$radius-sm:   6px;
+$radius-md:   10px;
+$radius-lg:   14px;
+$radius-xl:   20px;
+$radius-2xl:  28px;
+$radius-3xl:  40px;
+$radius-full: 9999px;
+
+
+
+// ================================================================
+// 6. SHADOW TOKENS
+// ================================================================
+
+
+$shadow-xs:    0 1px 4px rgba(17, 43, 95, 0.04);
+$shadow-sm:    0 2px 10px rgba(17, 43, 95, 0.06);
+$shadow-md:    0 4px 24px rgba(17, 43, 95, 0.10);
+$shadow-lg:    0 8px 40px rgba(17, 43, 95, 0.14);
+$shadow-xl:    0 20px 60px rgba(17, 43, 95, 0.18);
+$shadow-brand: 0 8px 24px rgba(27, 132, 231, 0.30);
+$shadow-inner: inset 0 2px 6px rgba(17, 43, 95, 0.06);
+
+
+// ================================================================
+// :root SPACING / RADIUS / SHADOW CSS CUSTOM PROPERTIES
+// ================================================================
+
+:root {
+  // ── Spacing ──────────────────────────────────────────────────
+  --space-xs:  #{$space-xs};
+  --space-sm:  #{$space-sm};
+  --space-md:  #{$space-md};
+  --space-md-lg: #{$space-md-lg};
+  --space-lg:  #{$space-lg};
+  --space-xl:  #{$space-xl};
+  --space-xxl: #{$space-xxl};
+  --space-3xl: #{$space-3xl};
+
+  // ── Radius ───────────────────────────────────────────────────
+  --radius-xs:   #{$radius-xs};
+  --radius-sm:   #{$radius-sm};
+  --radius-md:   #{$radius-md};
+  --radius-lg:   #{$radius-lg};
+  --radius-xl:   #{$radius-xl};
+  --radius-2xl:  #{$radius-2xl};
+  --radius-3xl:  #{$radius-3xl};
+  --radius-full: #{$radius-full};
+
+  // ── Shadows ──────────────────────────────────────────────────
+  --shadow-xs:    #{$shadow-xs};
+  --shadow-sm:    #{$shadow-sm};
+  --shadow-md:    #{$shadow-md};
+  --shadow-lg:    #{$shadow-lg};
+  --shadow-xl:    #{$shadow-xl};
+  --shadow-brand: #{$shadow-brand};
+  --shadow-inner: #{$shadow-inner};
+}
+
+
+// ================================================================
+// UTILITY CLASS GENERATION
+// (full content of _padding&margin.scss)
+// ================================================================
+
+// ── Padding utilities ─────────────────────────────────────────
+@each $size, $value in $custom-spacing {
+  .p-#{$size}  { padding: $value !important; }
+  .pt-#{$size} { padding-top: $value !important; }
+  .pb-#{$size} { padding-bottom: $value !important; }
+  .pl-#{$size} { padding-left: $value !important; }
+  .pr-#{$size} { padding-right: $value !important; }
+  .px-#{$size} { padding-left: $value !important; padding-right: $value !important; }
+  .py-#{$size} { padding-top: $value !important; padding-bottom: $value !important; }
+}
+
+// Responsive padding utilities  (.p-lg-md, .pt-xl-sm, …)
+@each $breakpoint, $breakvalue in $breakpoints {
+  @media (min-width: $breakvalue) {
+    @each $size, $value in $custom-spacing {
+      .p-#{$breakpoint}-#{$size}  { padding: $value !important; }
+      .pt-#{$breakpoint}-#{$size} { padding-top: $value !important; }
+      .pb-#{$breakpoint}-#{$size} { padding-bottom: $value !important; }
+      .pl-#{$breakpoint}-#{$size} { padding-left: $value !important; }
+      .pr-#{$breakpoint}-#{$size} { padding-right: $value !important; }
+      .px-#{$breakpoint}-#{$size} { padding-left: $value !important; padding-right: $value !important; }
+      .py-#{$breakpoint}-#{$size} { padding-top: $value !important; padding-bottom: $value !important; }
+    }
+  }
+}
+
+
+// ── Margin utilities ──────────────────────────────────────────
+@each $size, $value in $custom-margin {
+  .m-#{$size}  { margin: $value !important; }
+  .mt-#{$size} { margin-top: $value !important; }
+  .mb-#{$size} { margin-bottom: $value !important; }
+  .ml-#{$size} { margin-left: $value !important; }
+  .mr-#{$size} { margin-right: $value !important; }
+  .mx-#{$size} { margin-left: $value !important; margin-right: $value !important; }
+  .my-#{$size} { margin-top: $value !important; margin-bottom: $value !important; }
+
+  // Responsive margin utilities  (.mt-xl-lg, .mx-md-sm, …)
+  @each $breakpoint, $bp-value in $breakpoints {
+    @media (min-width: $bp-value) {
+      .m-#{$size}-#{$breakpoint}  { margin: $value !important; }
+      .mt-#{$size}-#{$breakpoint} { margin-top: $value !important; }
+      .mb-#{$size}-#{$breakpoint} { margin-bottom: $value !important; }
+      .ml-#{$size}-#{$breakpoint} { margin-left: $value !important; }
+      .mr-#{$size}-#{$breakpoint} { margin-right: $value !important; }
+      .mx-#{$size}-#{$breakpoint} { margin-left: $value !important; margin-right: $value !important; }
+      .my-#{$size}-#{$breakpoint} { margin-top: $value !important; margin-bottom: $value !important; }
+    }
+  }
+}
+
+
+// ── Layout helpers ────────────────────────────────────────────
+
+// Responsive container — grows margins with screen size
+.container {
+  max-width: none !important;
+  width: auto !important;
+  margin-left: $space-md;
+  margin-right: $space-md;
+
+  @each $breakpoint, $bp-value in $breakpoints {
+    @if map-has-key($custom-margin, $breakpoint) {
+      @media (min-width: $bp-value) {
+        margin-left: map-get($custom-margin, $breakpoint);
+        margin-right: map-get($custom-margin, $breakpoint);
+      }
+    }
+  }
+}
+
+// Full-width section wrapper — grows padding with screen size
+.auto-padding {
+  max-width: none;
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: $space-md;
+  padding-right: $space-md;
+
+  @each $breakpoint, $bp-value in $breakpoints {
+    @if map-has-key($custom-margin, $breakpoint) {
+      @media (min-width: $bp-value) {
+        padding-left: map-get($custom-margin, $breakpoint);
+        padding-right: map-get($custom-margin, $breakpoint);
+      }
+    }
+  }
+}

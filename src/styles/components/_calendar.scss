@@ -1,0 +1,181 @@
+// ── Calendar Card ──────────────────────────────────────────────
+
+.calendar-card {
+  background: $white;
+  border: 1px solid $border-color;
+  border-radius: $radius-xl;
+  padding: 16px;
+}
+
+
+// ── Header ────────────────────────────────────────────────────
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+
+  h5 {
+    font-size: $text-sm2;
+    font-weight: $fw-semibold;
+    color: $text-primary;
+    margin: 0;
+  }
+
+  .cal-nav {
+    display: flex;
+    gap: 4px;
+
+    button {
+      width: 32px;
+      height: 32px;
+      border-radius: $radius-sm;
+      border: 1px solid $border-color;
+      background: $white;
+      color: $gray-600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: $text-sm;
+      transition: all 0.2s ease;
+
+      &:hover {
+        border-color: $secondary;
+        color: $secondary;
+      }
+    }
+  }
+}
+
+
+// ── Grid ──────────────────────────────────────────────────────
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  text-align: center;
+}
+
+
+// ── Day Labels ────────────────────────────────────────────────
+
+.cal-day-label {
+  font-size: $text-2xs;
+  font-weight: $fw-semibold;
+  color: $gray-600;
+  padding: 4px 0;
+  text-transform: uppercase;
+}
+
+
+// ── Day Cell ─────────────────────────────────────────────────
+
+.cal-day {
+  padding: 8px 4px;
+  border-radius: $radius-sm;
+  font-size: $text-xs;
+  font-weight: $fw-medium;
+  color: $text-primary;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border: none;
+  background: none;
+
+  &:hover {
+    background: $primary-50;
+    color: $primary;
+  }
+
+  &.today {
+    font-weight: $fw-bold;
+    color: $primary;
+  }
+
+  &.selected {
+    background: $primary;
+    color: $white;
+    font-weight: $fw-semibold;
+  }
+
+  &.disabled {
+    color: $gray-400;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  &.other-month {
+    color: $gray-400;
+  }
+}
+
+
+// ── Time Slots ────────────────────────────────────────────────
+
+.time-slot {
+  padding: 8px 16px;
+  border-radius: $radius-sm;
+
+  font-size: $text-xs;
+  font-weight: $fw-medium;
+
+  color: $gray-700;
+  background: $white;
+
+  border: 1px solid $gray-200;
+
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover {
+    border-color: $primary-200;
+    color: $primary;
+  }
+
+  &.selected {
+    background: $primary;
+    border-color: $primary;
+    color: $white;
+  }
+
+  &.unavailable {
+    color: $gray-400;
+    background: $gray-100;
+    border-color: $gray-100;
+
+    cursor: not-allowed;
+    pointer-events: none;
+    text-decoration: line-through;
+  }
+}
+// .cal-overlay {
+//   position: absolute;
+//   top: calc(100% + 6px);
+//   left: 0;
+//   z-index: 400;
+//   min-width: 300px;
+//   background: $white;
+//   border: 1.5px solid $gray-300;
+//   border-radius: $radius-lg;
+//   box-shadow: 0 16px 48px rgba($secondary, 0.15);
+//   padding: 16px;
+//   display: none;
+
+//   &.open { display: block; }
+
+//   .calendar-header {
+//     display: flex;
+//     align-items: center;
+//     justify-content: space-between;
+//     margin-bottom: 12px;
+
+//     h5 {
+//       font-size: 14px;
+//       font-weight: $fw-semibold;
+//       color: $secondary;
+//       margin: 0;
+//     }
+//   }
+// }

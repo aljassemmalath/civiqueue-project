@@ -1,0 +1,829 @@
+$_card-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+@mixin card-surface($radius: $radius-lg, $border: $gray-200) {
+  background: $white;
+  border: 1px solid $border;
+  border-radius: $radius;
+}
+
+@mixin card-hover-lift($y: -4px, $shadow: 0 8px 24px rgba($secondary, 0.08), $border: null) {
+  &:hover {
+    transform: translateY($y);
+    box-shadow: $shadow;
+    @if $border { border-color: $border; }
+  }
+}
+
+@mixin icon-box($size: 40px, $radius: $radius-md) {
+  width: $size;
+  height: $size;
+  border-radius: $radius;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+@mixin card-header-row($pad-x: 24px, $pad-top: 24px) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $pad-top $pad-x 0;
+  border-bottom: none !important;
+  background: none !important;
+}
+
+
+// Base .card
+
+// ── Reset (avoid !important abuse) ─────────────────────────────
+
+.card,
+.card-body {
+  height: auto;
+  min-height: unset;
+}
+
+
+// ── Base Card ────────────────────────────────────────────────
+
+.card {
+  background: $white;
+  border-radius: $radius-lg;
+  border: 1px solid $border-color;
+  box-shadow: $shadow-brand-sm;
+  transition: box-shadow 0.2s ease;
+
+  .card-header {
+    @include card-header-row(24px, 24px);
+  }
+
+  .card-body {
+    padding: 16px 24px 24px;
+  }
+
+  .card-title {
+    font-size: $text-lg;
+    font-weight: $fw-semibold;
+    color: $text-primary;
+    margin-bottom: 8px;
+  }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: $text-xs;
+    color: $text-muted;
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 24px;
+    margin-top: 8px;
+    background: none;
+    border-top: 1px solid $border-color;
+  }
+}
+
+
+// ── Text ─────────────────────────────────────────────────────
+
+.card-text {
+  @include fluid-text("sm", "light", "text");
+  color: $text-muted;
+  margin-bottom: 12px;
+}
+
+
+// ── Header / Body / Divider ──────────────────────────────────
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-body {
+  padding: 0 24px 24px;
+}
+
+.card-divider {
+  border: none;
+  border-top: 1px solid $border-color;
+  margin: 16px 0;
+  opacity: 1;
+}
+
+
+// ── Selectable Card ──────────────────────────────────────────
+
+.card-selectable {
+  cursor: pointer;
+  border: 1px solid $gray-300;
+  box-shadow: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  position: relative;
+
+  .card-radio {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .card-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-radio-ui {
+    width: 20px;
+    height: 20px;
+    border-radius: $radius-full;
+    border: 2px solid $border-color;
+    background: $white;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  &:has(.card-radio:checked) {
+    border-color: $primary;
+    background: $primary-50;
+    box-shadow: $shadow-brand-sm;
+
+    .card-radio-ui {
+      border-color: $primary;
+      background: $primary;
+      box-shadow: inset 0 0 0 3px $white;
+    }
+  }
+  .card-radio:checked + .card-header {
+    background-color: $primary;
+    color: $white;
+
+    .sd-card-icon {
+      background: $primary;
+      color: $white;
+    }
+  }
+
+  &:hover:not(:has(.card-radio:checked)) {
+    border-color: $primary-200;
+    background: $primary-50;
+  }
+}// Flip card 
+
+.flip-card {
+  perspective: 1200px;
+  height: 420px;
+  cursor: pointer;
+
+  &-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+  }
+
+  &:hover &-inner { transform: rotateY(180deg); }
+
+  &-front,
+  &-back {
+    position: absolute;
+    inset: 0;
+    border-radius: $radius-lg;
+    overflow: hidden;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  &-front {
+    display: flex;
+    flex-direction: column;
+
+    .front-image {
+      position: relative;
+      height: 55%;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), filter 0.6s ease;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        inset-inline: 0;
+        bottom: 0;
+        height: 60%;
+        background: linear-gradient(to top, rgba($secondary, 0.6) 0%, transparent 100%);
+        pointer-events: none;
+      }
+
+      .front-number {
+        position: absolute;
+        top: 24px; left: 24px;
+        width: 36px; height: 36px;
+        border-radius: $radius-full;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: $text-xs;
+        font-weight: $fw-bold;
+        color: $secondary;
+        background: rgba($white, 0.4);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba($white, 0.3);
+        z-index: 2;
+      }
+
+      .flip-hint {
+        position: absolute;
+        top: 16px; right: 16px;
+        width: 32px; height: 32px;
+        border-radius: $radius-full;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: $text-xs;
+        color: rgba($white, 0.7);
+        background: rgba($white, 0.15);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba($white, 0.2);
+        z-index: 2;
+        opacity: 0;
+        transform: rotate(0deg);
+        transition: all 0.3s ease;
+      }
+    }
+
+    .front-content {
+      flex: 1;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: $white;
+      border: 1px solid $gray-300;
+      border-top: none;
+      border-radius: 0 0 $radius-lg $radius-lg;
+      transition: box-shadow 0.4s ease;
+
+      h4 {
+        font-size: 17px;
+        font-weight: $fw-bold;
+        color: $secondary;
+        margin-bottom: 6px;
+      }
+
+      p {
+        font-size: 13px;
+        color: $gray-600;
+        line-height: 1.5;
+        margin-bottom: 12px;
+      }
+    }
+  }
+
+  &-back {
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    padding: 32px 28px;
+    color: $white;
+    background: linear-gradient(145deg, $secondary 0%, $secondary-dark 100%);
+    border: 1px solid rgba($white, 0.08);
+
+    .back-icon {
+      @include icon-box(52px, $radius-md);
+      font-size: 24px;
+      margin-bottom: 20px;
+      background: rgba($white, 0.1);
+      border: 1px solid rgba($white, 0.15);
+    }
+
+    h4 {
+      font-size: $text-xl;
+      font-weight: $fw-bold;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 13px;
+      color: rgba($white, 0.6);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .back-features {
+      list-style: none;
+      margin: 16px 0 auto;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 13px;
+        font-weight: $fw-medium;
+        color: rgba($white, 0.85);
+      }
+
+      .feature-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: $radius-full;
+        background: $primary-200;
+        flex-shrink: 0;
+      }
+    }
+  }
+
+  &:hover {
+    .front-image img { transform: scale(1.08); filter: brightness(0.85); }
+    .flip-hint        { opacity: 1; transform: rotate(180deg); }
+    .front-content    { box-shadow: 0 12px 32px rgba($secondary, 0.1); }
+  }
+
+  @media (hover: none) {
+    &:hover &-inner         { transform: none; }
+    &.flipped &-inner       { transform: rotateY(180deg); }
+    .front-image .flip-hint { opacity: 1; }
+  }
+
+  @media (max-width: 991px) { height: 400px; }
+
+  @media (max-width: 575px) {
+    height: 380px;
+    &-front .front-content { padding: 16px 20px; h4 { font-size: $text-md; } }
+    &-back                 { padding: 24px 20px; h4 { font-size: $text-lg; } }
+  }
+}
+
+
+// Accent-line cards
+
+@mixin _accent-line($color) {
+  &::before { background: $color; }
+  &:hover   { border-color: $color; }
+}
+
+.speed-card,
+.coverage-card,
+.trust-card,
+.orange-card {
+  position: relative;
+  overflow: hidden;
+  @include card-surface($radius-lg, $gray-300);
+  transition: $_card-transition;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 0; height: 3px;
+    border-radius: $radius-full;
+    transition: width 0.3s ease;
+  }
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba($secondary, 0.06);
+    &::before { width: 60%; }
+  }
+}
+
+.speed-card    { @include _accent-line($primary-200); }
+.coverage-card { @include _accent-line($success-border-subtle); }
+.trust-card    { @include _accent-line($info-border-subtle); }
+.orange-card   { @include _accent-line($warning-border-subtle); }
+
+
+// About — Mission / Vision card
+
+.about-mv-card {
+  border-radius: 16px;
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+
+  &-icon {
+    @include icon-box(44px, $radius-md);
+    font-size: 20px;
+    margin-bottom: 14px;
+  }
+
+  h4 {
+    font-size: 17px;
+    font-weight: $fw-bold;
+    color: $secondary;       
+    margin-bottom: 8px;
+  }
+
+  p {
+    font-size: $text-sm;
+    color: $text-muted;      
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  &--mission {
+    background: linear-gradient(135deg, rgba($primary, 0.06) 0%, rgba($primary, 0.02) 100%);
+    border: 1px solid rgba($primary, 0.15);
+    .about-mv-card-icon { background: rgba($primary, 0.12); color: $primary; }
+  }
+
+  &--vision {
+    background: linear-gradient(135deg, rgba($info, 0.06) 0%, rgba($info, 0.02) 100%);
+    border: 1px solid rgba($info, 0.2);
+    .about-mv-card-icon { background: rgba($info, 0.12); color: $info; }
+  }
+}
+
+
+// Office card 
+
+.office-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px;
+  @include card-surface(12px, $gray-300);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+
+  &:hover    { border-color: $primary-200; background: $primary-50; }
+  &.selected { border-color: $primary;     background: $primary-50; }
+
+  h6 {
+    font-size: $text-sm;
+    font-weight: $fw-bold;
+    color: $secondary;
+    margin: 0 0 2px;
+  }
+}
+
+
+// Dashboard widget card
+
+.dashboard-card {
+  @include card-surface(8px, $border-color);
+  transition: $_card-transition;
+  position: relative;
+
+  &:hover { border-color: $gray-300; }
+
+  .card-header { padding: 16px 16px 0; }
+
+  .card-body { padding: 12px 24px 24px; }
+
+  .card-title {
+    @include fluid-text("sm", "semibold", "text");
+    color: $secondary;
+    margin-bottom: 0 !important;
+  }
+}
+
+.selectable-card-header{
+  padding: 16px !important;
+}
+
+// Horizontal appointment row 
+
+.horizontal-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: $white;
+  border-bottom: 1px solid $border-color;
+  transition: $_card-transition;
+  padding-bottom: 24px;
+
+  & + .horizontal-card { margin-top: 16px; }
+
+  &:last-of-type {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .appt-info {
+    flex: 1;
+    min-width: 0;
+
+    h5 {
+      font-size: 15px;
+      font-weight: $fw-semibold;  
+      color: $text-primary;
+      margin: 0;
+    }
+  }
+
+  .appt-meta {
+    font-size: 12.5px;
+    color: $gray-600;
+    margin-top: 2px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+
+    span { display: inline-flex; align-items: center; gap: 4px; }
+  }
+
+  .appt-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .action-dropdown {
+    position: relative;
+
+    .dropdown-menu-gb {
+      position: absolute;
+      right: 0;
+      top: 100%;
+      background: $white;
+      border: 1px solid $border-color;
+      border-radius: 16px;
+      padding: 6px;
+      min-width: 160px;
+      display: none;
+      z-index: 10;
+
+      &.show { display: block; }
+    }
+  }
+}
+
+
+// Document card 
+
+.doc-card {
+  @include card-surface(24px, $border-color);
+  padding: 20px;
+  transition: $_card-transition;
+  height: 100%;
+
+  &:hover { border-color: $gray-300; }
+
+  .doc-icon {
+    @include icon-box(46px, 8px);
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  h5 {
+    font-size: 14px;
+    font-weight: $fw-semibold;    
+    color: $text-primary;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .doc-details {
+    font-size: 12px;
+    color: $gray-600;
+    margin-bottom: 12px;
+
+    span { display: block; margin-bottom: 2px; }
+  }
+
+  .doc-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid $gray-100;
+  }
+
+  .expiry-badge {
+    font-size: 11px;
+    font-weight: $fw-semibold;    
+    padding: 2px 8px;
+    border-radius: $radius-full;
+  }
+}
+
+
+// Help contact cards 
+
+.help-contact-card {
+  @include card-surface(16px, $gray-300);
+  padding: 32px 24px;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  align-items: start;
+  transition: box-shadow 0.2s ease;
+
+  &:hover { box-shadow: $shadow-brand-md; }
+
+  h5 {
+    font-size: 16px;
+    font-weight: $fw-bold;
+    color: $secondary;
+  }
+
+  p {
+    font-size: $text-sm;
+    color: $text-muted;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    flex: 1;
+  }
+}
+
+.help-contact-form-card {
+  @include card-surface(20px, $gray-300);
+  padding: 40px;
+}
+
+
+// Result card 
+
+.result-card {
+  @include card-surface(16px, $border-color);
+  overflow: hidden;
+  transition: box-shadow 0.25s ease, transform 0.2s ease, border-color 0.2s ease;
+
+  @include card-hover-lift(-2px, 0 8px 32px rgba($secondary, 0.1), $primary-200);
+}
+
+.result-card-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px 16px;
+  border-bottom: 1px solid $border-color;
+}
+
+.result-svc-icon {
+  @include icon-box(44px, $radius-md);
+  background: $primary-50;
+
+  img { width: 24px; height: 24px; }
+}
+
+.result-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-top: 1px solid $border-color;
+  background: $gray-100;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+
+// Service-detail 
+
+.sd-section-card {
+  @include card-surface($radius-lg, #EDF3FA);
+  overflow: hidden;
+}
+
+.sd-section-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: #FAFCFF !important;
+  border-bottom: 1px solid #EDF3FA;
+}
+
+.sd-section-card-title {
+  font-size: 15px;
+  font-weight: $fw-semibold;
+  color: $secondary;
+  margin: 0;
+}
+
+.sd-section-card-body { padding: 20px; }
+
+.sd-book-card {
+  background: $primary-50;
+  border: 1.5px solid rgba($primary, 0.10);
+  border-radius: $radius-lg;
+  padding: 20px;
+}
+
+.sd-book-card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.sd-book-card-icon {
+  @include icon-box(48px, $radius-md);
+  background: $secondary;
+}
+
+.sd-book-card-title {
+  font-size: 15px;
+  font-weight: $fw-bold;
+  color: $secondary;
+  margin: 0 0 2px;
+}
+
+.sd-book-card-sub {
+  font-size: $text-xs;
+  color: $text-muted;
+  margin: 0;
+}
+
+.sd-page-card {
+  @include card-surface(20px, $gray-200);
+  box-shadow: 0 2px 16px rgba($secondary, 0.07);
+  padding: $space-md-lg;
+}
+
+.sd-page-card-hero {
+  padding-bottom: $space-md-lg;
+  margin-bottom: $space-md-lg;
+  border-bottom: 1px solid $gray-200;
+}
+
+
+.sd-card-icon {
+  @include icon-box(40px, $radius-full);
+
+  &.icon-white      { background: $gray-100;   color: $gray-400; }
+  &.icon-blue      { background: rgba($primary, 0.1);   color: $primary; }
+  &.icon-info      { background: $info-bg-subtle;         color: $info; }
+  &.icon-success   { background: $success-bg-subtle;      color: $success; }
+  &.icon-warning   { background: $warning-bg-subtle;      color: $warning; }
+  &.icon-danger    { background: $danger-bg-subtle;       color: $danger; }
+  &.icon-neutral   { background: $gray-200;               color: $gray-700; }
+  &.icon-secondary { background: rgba($secondary, 0.08);  color: $secondary; }
+}
+
+
+// Service listing card 
+
+.service-card {
+  height: 100%;    
+
+  > .card {
+    height: 100% !important;   
+    display: flex;
+    flex-direction: column;
+
+    .card-header {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 10px;
+      padding: 20px 20px 0;
+    }
+
+    .card-body {
+      flex: 1;
+      padding: 12px 20px 20px;
+    }
+
+    .card-title {
+      @include fluid-text("sm2", "semibold", "text");
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .card-text {
+      @include fluid-text("sm", "light", "text");
+      line-height: 1.5;
+      color: $gray-600;
+      margin-bottom: 0;
+    }
+
+    .card-footer {
+      padding: 10px 20px 14px;
+      margin-top: 0;
+    }
+  }
+}
+
+.section-title {
+  font-weight: $fw-semibold;
+  margin-bottom: 10px;
+}
