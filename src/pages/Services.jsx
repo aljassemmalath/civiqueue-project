@@ -10,14 +10,24 @@ function Services() {
   const [currentPage, setCurrentPage] = useState(1);
   const [filterOverlayOpen, setFilterOverlayOpen] = useState(false);
 
+  const shuffledServices = useMemo(() => {
+    const arr = [...services];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }, []);
+
   const filteredServices = useMemo(() => {
-    return services.filter(service => {
+    const base = activeCategory === 'all' ? shuffledServices : services;
+    return base.filter(service => {
       const matchCat = activeCategory === 'all' || service.category === activeCategory;
       const matchSearch = service.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         service.description.toLowerCase().includes(searchQuery.toLowerCase());
       return matchCat && matchSearch;
     });
-  }, [activeCategory, searchQuery]);
+  }, [activeCategory, searchQuery, shuffledServices]);
 
   const totalPages = Math.ceil(filteredServices.length / CARDS_PER_PAGE);
   const paginatedServices = filteredServices.slice(

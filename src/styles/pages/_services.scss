@@ -292,3 +292,10 @@
 .badge-count {
   color: $primary;
 }
+
+@media (max-width: 768px) {
+  .services-search-row {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+}

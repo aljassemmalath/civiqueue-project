@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import StatsStrip from '../components/StatsStrip';
+import serviceCenterImage from "../assets/images/serviceCenterImage.png";
 
 const values = [
   { title: 'Trust', description: 'We earn trust by being transparent, secure, and reliable — every interaction, every time.', icon: '/assets/images/svg/shield-01.svg', cardClass: 'speed-card' },
@@ -26,7 +27,10 @@ const highlights = [
 function About() {
   return (
     <>
-      <section className="about-hero">
+      <section className="about-hero"
+        style={{
+         background: `url(${serviceCenterImage}) center center / cover no-repeat`
+        }}>
         <div className="auto-padding about-hero-inner">
           <h1 className="display-md fw-bold">
             <span className="text-primary">Unified</span> Service Platform

@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import DropdownField from '../components/DropdownField';
 
 const OFFICE_DATA = {
@@ -73,6 +73,9 @@ const stepInfo = [
 
 function Booking() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const preselectedService = searchParams.get('service') || '';
+  const preselectedServiceName = searchParams.get('serviceName') || '';
   const [step, setStep] = useState(1);
   const [confirmed, setConfirmed] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -139,7 +142,7 @@ function Booking() {
                   </div>
                 </div>
                 <h3 className="bk-confirmed-title">Booking Submitted!</h3>
-                <p className="bk-confirmed-sub">Your appointment request has been received and is being reviewed. You will receive a confirmation within <strong>24–48 hours</strong> via email and SMS.</p>
+                <p className="bk-confirmed-sub">Your appointment request has been received and is being reviewed by our team.</p>
               </div>
 
               <div className="row justify-content-center">
@@ -148,11 +151,11 @@ function Booking() {
                     <div className="alert-card-icon-wrap"><i className="bi bi-exclamation-circle"></i></div>
                     <div className="alert-card-content">
                       <div className="alert-card-title">Appointment Under Review</div>
-                      <div className="alert-card-text">Your booking is pending approval. You'll be notified within 24–48 hours via email and SMS.</div>
+                      <div className="alert-card-text">Your booking is currently pending approval. You will receive a confirmation or update within 24–48 hours via email and SMS to the contact details you provided.</div>
                     </div>
                   </div>
 
-                  <div className="dashboard-card mb-4">
+                  {/* <div className="dashboard-card mb-4">
                     <div className="card-header">
                       <h5 className="card-title">Appointment Details</h5>
                       <span className="status-badge status-warning" style={{ display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
@@ -175,12 +178,12 @@ function Booking() {
                         </div>
                       ))}
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
-              <div className="d-flex gap-2 justify-content-end">
-                <button className="btn btn-outline-neutral"><i className="bi bi-download"></i> Download PDF</button>
+              <div className="d-flex gap-2 justify-content-center">
+                {/* <button className="btn btn-outline-neutral"><i className="bi bi-download"></i> Download PDF</button> */}
                 <button className="btn btn-secondary" onClick={() => navigate('/dashboard')}><i className="bi bi-grid-1x2"></i> Go to dashboard</button>
               </div>
             </div>
@@ -206,6 +209,19 @@ function Booking() {
       <div className="container px-0">
         <main className="booking-layout">
           <div className="booking-panels sd-page-card">
+
+            {preselectedServiceName && (
+              <div className="selected-service-banner">
+                <i className="bi bi-grid-3x3-gap-fill"></i>
+                <div>
+                  <span className="selected-service-banner-label">Selected service</span>
+                  <span className="selected-service-banner-name">{preselectedServiceName}</span>
+                </div>
+                <Link to="/services" className="selected-service-banner-change">
+                  Change service <i className="bi bi-arrow-right"></i>
+                </Link>
+              </div>
+            )}
 
             {step === 1 && (
               <div className="wizard-panel active">
@@ -332,7 +348,7 @@ function Booking() {
                       <div className="col-md-6">
                         <div className="form-group">
                           <label className="form-label">Appointment time <span className="text-danger">*</span></label>
-                          <DropdownField placeholder="Select a time" groups={timeGroups} value={time} onChange={setTime} size="lg" />
+                          <DropdownField placeholder="Select a time" groups={timeGroups} value={time} onChange={setTime} size="lg" disabled={!date} />
                           {!date && <span className="field-hint"><i className="bi bi-info-circle"></i> Choose appointment date first</span>}
                         </div>
                       </div>
@@ -353,7 +369,7 @@ function Booking() {
                       <div className="col-md-6">
                         <div className="form-group">
                           <label className="form-label">Service center <span className="text-danger">*</span></label>
-                          <DropdownField placeholder="Select a service center" options={centerOptions} value={office} onChange={setOffice} size="lg" searchable />
+                          <DropdownField placeholder="Select a service center" options={centerOptions} value={office} onChange={setOffice} size="lg" searchable disabled={!city} />
                           {!city && <span className="field-hint"><i className="bi bi-info-circle"></i> Choose a city first</span>}
                         </div>
                       </div>

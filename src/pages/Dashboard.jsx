@@ -8,7 +8,7 @@ const sidebarLinks = [
   { id: 'appointments',  label: 'My appointments',  section: 'Main',    iconDefault: '/assets/images/svg/appointments-outline.svg', iconActive: '/assets/images/svg/appointments-solid.svg' },
   { id: 'documents',     label: 'Documents',        section: 'Main',    iconDefault: '/assets/images/svg/files-outline.svg',        iconActive: '/assets/images/svg/files-solid.svg' },
   { id: 'settings',      label: 'Settings',         section: 'Account', iconDefault: '/assets/images/svg/settings-outline.svg',     iconActive: '/assets/images/svg/settings-solid.svg' },
-  { id: 'help',          label: 'Help center',      section: 'Account', iconDefault: '/assets/images/svg/help-outline.svg',         iconActive: '/assets/images/svg/help-solid.svg' },
+  // { id: 'help',          label: 'Help center',      section: 'Account', iconDefault: '/assets/images/svg/help-outline.svg',         iconActive: '/assets/images/svg/help-solid.svg' },
 ];
 
 const allAppointments = [
@@ -22,12 +22,13 @@ const allAppointments = [
   { id: 8, month: 'JAN', day: '18', time: '10:30 AM', weekday: 'Saturday', status: 'Cancelled',        statusClass: 'status-danger',  title: 'Tax Clearance Certificate',   location: 'Revenue Office',           category: 'Tax & Finance', tab: 'cancelled' },
 ];
 
-const documents = [
-  { id: 1, name: 'National_ID_Renewal_Confirmation.pdf', size: '1.2 MB', type: 'PDF', date: 'Mar 28, 2026', icon: 'bi-file-earmark-pdf', color: '#CC0C39' },
-  { id: 2, name: 'Passport_Renewal_Booking.pdf',         size: '0.8 MB', type: 'PDF', date: 'Apr 1, 2026',  icon: 'bi-file-earmark-pdf', color: '#CC0C39' },
-  { id: 3, name: 'Birth_Certificate_Copy.jpg',           size: '2.1 MB', type: 'JPG', date: 'Feb 22, 2026', icon: 'bi-file-earmark-image', color: '#2FBF71' },
-  { id: 4, name: 'Proof_of_Address_UtilityBill.pdf',     size: '0.5 MB', type: 'PDF', date: 'Feb 10, 2026', icon: 'bi-file-earmark-pdf', color: '#CC0C39' },
-  { id: 5, name: 'Passport_Photo.jpg',                   size: '0.3 MB', type: 'JPG', date: 'Feb 5, 2026',  icon: 'bi-file-earmark-image', color: '#2FBF71' },
+const allDocuments = [
+  { id: 1, name: 'National_ID_scan.pdf',       uploaded: 'Apr 5, 2026',  linked: 'Passport renewal', size: '2.4 MB', icon: 'bi-file-earmark-person',      iconClass: 'icon-blue',    expiry: 'valid',    category: 'id' },
+  { id: 2, name: 'Passport_photo_1.jpg',       uploaded: 'Apr 5, 2026',  linked: 'Passport renewal', size: '1.1 MB', icon: 'bi-file-earmark-image',       iconClass: 'icon-success', expiry: 'valid',    category: 'photos' },
+  { id: 3, name: 'Income_statement_2025.pdf',  uploaded: 'Mar 20, 2026', linked: 'Tax filing',       size: '3.8 MB', icon: 'bi-file-earmark-spreadsheet', iconClass: 'icon-blue',    expiry: 'valid',    category: 'financial' },
+  { id: 4, name: 'Tax_receipts_2025.pdf',      uploaded: 'Mar 18, 2026', linked: 'Tax filing',       size: '5.2 MB', icon: 'bi-file-earmark-text',        iconClass: 'icon-blue',    expiry: 'expiring', category: 'financial' },
+  { id: 5, name: 'Driving_theory_cert.pdf',    uploaded: 'Feb 28, 2026', linked: 'Driving test',     size: '890 KB', icon: 'bi-file-earmark-medical',     iconClass: 'icon-success', expiry: 'valid',    category: 'other' },
+  { id: 6, name: 'Passport_copy.pdf',          uploaded: 'Jan 10, 2026', linked: 'Visa application', size: '4.1 MB', icon: 'bi-file-earmark-pdf',         iconClass: 'icon-info',    expiry: 'expired',  category: 'id' },
 ];
 
 function Dashboard() {
@@ -36,33 +37,36 @@ function Dashboard() {
   const [bookingOpen, setBookingOpen] = useState(false);
   const [selectedAppt, setSelectedAppt] = useState(null);
   const [apptTab, setApptTab] = useState('upcoming');
+  const [apptFilterOpen, setApptFilterOpen] = useState(false);
 
   const navigate = (page) => { setActivePage(page); setSidebarOpen(false); window.scrollTo(0, 0); };
-
   const openDetail = (appt) => { setSelectedAppt(appt); setActivePage('appt-detail'); setSidebarOpen(false); window.scrollTo(0, 0); };
 
   const mainLinks = sidebarLinks.filter(l => l.section === 'Main');
   const accountLinks = sidebarLinks.filter(l => l.section === 'Account');
 
+  const tabCounts = {
+    upcoming: allAppointments.filter(a => a.tab === 'upcoming').length,
+    completed: allAppointments.filter(a => a.tab === 'completed').length,
+    cancelled: allAppointments.filter(a => a.tab === 'cancelled').length,
+  };
+
   return (
     <div className="dash-layout">
-      {/* Backdrop always rendered — CSS controls opacity/pointer-events via .open class */}
       <div className={`sidebar-backdrop ${sidebarOpen ? 'open' : ''}`} onClick={() => setSidebarOpen(false)}></div>
 
       <aside className={`dash-sidebar d-flex flex-column flex-shrink-0 ${sidebarOpen ? 'open' : ''}`}>
         <nav className="sidebar-nav flex-grow-1 d-flex flex-column">
-
           <div className="sidebar-section">
             <span className="sidebar-section-label">Main</span>
             {mainLinks.map(link => (
-              <button key={link.id} className={`sidebar-link ${activePage === link.id ? 'active' : ''}`} onClick={() => navigate(link.id)}>
+              <button key={link.id} className={`sidebar-link ${activePage === link.id || (activePage === 'appt-detail' && link.id === 'appointments') ? 'active' : ''}`} onClick={() => navigate(link.id)}>
                 <img src={link.iconDefault} className="icon-default" alt="" />
                 <img src={link.iconActive} className="icon-active" alt="" />
                 <span>{link.label}</span>
               </button>
             ))}
           </div>
-
           <div className="sidebar-section">
             <span className="sidebar-section-label">Account</span>
             {accountLinks.map(link => (
@@ -73,7 +77,6 @@ function Dashboard() {
               </button>
             ))}
           </div>
-
           <div className="sidebar-bottom">
             <div className="d-flex d-lg-none align-items-center gap-2 px-2 py-3" style={{ borderTop: '1px solid #DDE6F0', marginBottom: '4px' }}>
               <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: 'linear-gradient(135deg,#1B84E7,#0A4582)', color: '#fff', fontSize: '12px', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>AK</div>
@@ -103,7 +106,6 @@ function Dashboard() {
               <section className="page-section active">
                 <div className="page-content">
                   <nav className="breadcrumb"><span className="breadcrumb-item active">Dashboard</span></nav>
-
                   <div className="welcome-card mb-4">
                     <div className="d-flex align-items-end justify-content-between flex-wrap gap-3">
                       <div>
@@ -152,21 +154,27 @@ function Dashboard() {
                     </div>
                     <div className="col-lg-4">
                       <div className="dashboard-card">
-                        <div className="card-header"><h5 className="card-title">Recent activity</h5></div>
+                        <div className="card-header">
+                          <h5 className="card-title">Recent activity</h5>
+                        </div>
                         <hr className="card-divider" />
                         <div className="card-body">
-                          {allAppointments.filter(a => a.tab !== 'upcoming').slice(0, 3).map(item => (
-                            <div key={item.id} className="activity-item d-flex align-items-center gap-3 mb-3" style={{ cursor: 'pointer' }} onClick={() => openDetail(item)}>
-                              <div className="card-icon flex-shrink-0">
-                                <img src={item.tab === 'completed' ? '/assets/images/svg/appointment-completed.svg' : '/assets/images/svg/appointment-canceled.svg'} alt="" />
-                              </div>
-                              <div className="flex-grow-1" style={{ minWidth: 0 }}>
-                                <div className="fw-semibold text-sm text-truncate">{item.title}</div>
-                                <div className="text-xs text-muted">{item.month} {item.day}, 2026</div>
-                              </div>
-                              <span className={`status-badge ${item.statusClass} flex-shrink-0`}>{item.status}</span>
-                            </div>
-                          ))}
+                          <div className="timeline-item">
+                            <div className="timeline-dot icon-success"><img src="/assets/images/svg/tickBlue.svg" alt=""/></div>
+                            <div className="timeline-content"><h6>Passport renewal confirmed</h6><p>Your appointment has been confirmed.</p><span className="timeline-time">2 hours ago</span></div>
+                          </div>
+                          <div className="timeline-item">
+                            <div className="timeline-dot icon-blue"><img src="/assets/images/svg/tickBlue.svg" alt=""/></div>
+                            <div className="timeline-content"><h6>Document uploaded</h6><p>National ID scan added to your profile.</p><span className="timeline-time">Yesterday</span></div>
+                          </div>
+                          <div className="timeline-item">
+                            <div className="timeline-dot icon-warning"><img src="/assets/images/svg/notification-purple.svg" alt=""/></div>
+                            <div className="timeline-content"><h6>Reminder sent</h6><p>Tax appointment reminder for Apr 20.</p><span className="timeline-time">2 days ago</span></div>
+                          </div>
+                          <div className="timeline-item">
+                            <div className="timeline-dot icon-info"><img src="/assets/images/svg/appointment-turq.svg" alt=""/></div>
+                            <div className="timeline-content"><h6>New booking created</h6><p>Driving license test — Apr 15, 2:30 PM.</p><span className="timeline-time">3 days ago</span></div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -184,17 +192,37 @@ function Dashboard() {
                     <span className="breadcrumb-item active">My Appointments</span>
                   </nav>
                   <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
-                    <div><h4 className="section-title mb-1">My Appointments</h4><p className="section-dsc mb-0">All your booked government service appointments.</p></div>
-                    <button className="btn btn-primary" onClick={() => setBookingOpen(true)}><i className="bi bi-plus-lg"></i> New booking</button>
+                    <div>
+                      <h4 className="section-title mb-1">My Appointments</h4>
+                      <p className="section-dsc mb-0">All your booked government service appointments.</p>
+                    </div>
+                    <div className="d-flex gap-2">
+                      <button className="btn btn-outline-neutral d-md-none" onClick={() => setApptFilterOpen(true)}>
+                        <i className="bi bi-funnel"></i> Filter
+                      </button>
+                      <button className="btn btn-primary" onClick={() => setBookingOpen(true)}>
+                        <i className="bi bi-plus-lg"></i> New booking
+                      </button>
+                    </div>
                   </div>
 
                   <div className="dashboard-card">
-                    <div className="card-header gap-2 flex-wrap">
-                      {['upcoming', 'completed', 'cancelled'].map(tab => (
-                        <button key={tab} className={`btn btn-sm ${apptTab === tab ? 'btn-primary' : 'btn-outline-neutral'}`} onClick={() => setApptTab(tab)} style={{ textTransform: 'capitalize' }}>
-                          {tab} <span className="ms-1" style={{ opacity: 0.7 }}>({allAppointments.filter(a => a.tab === tab).length})</span>
+                    <div className="card-header flex-wrap gap-2">
+                      <div className="custom-tabs d-none d-md-flex">
+                        <button className={`custom-tab tab-primary ${apptTab === 'upcoming' ? 'active' : ''}`} onClick={() => setApptTab('upcoming')}>
+                          Upcoming <span className="badge">{tabCounts.upcoming}</span>
                         </button>
-                      ))}
+                        <button className={`custom-tab tab-success ${apptTab === 'completed' ? 'active' : ''}`} onClick={() => setApptTab('completed')}>
+                          Completed <span className="badge">{tabCounts.completed}</span>
+                        </button>
+                        <button className={`custom-tab tab-neutral ${apptTab === 'cancelled' ? 'active' : ''}`} onClick={() => setApptTab('cancelled')}>
+                          Cancelled <span className="badge">{tabCounts.cancelled}</span>
+                        </button>
+                      </div>
+                      <div className="d-md-none">
+                        <span className="fw-semibold text-sm" style={{ textTransform: 'capitalize' }}>{apptTab}</span>
+                        <span className="ms-2 status-badge status-info">{tabCounts[apptTab]}</span>
+                      </div>
                     </div>
                     <hr className="card-divider" />
                     <div className="card-body">
@@ -204,7 +232,7 @@ function Dashboard() {
                           <p>No {apptTab} appointments.</p>
                         </div>
                       ) : (
-                        <div className="appt-grid appt-grid--2">
+                        <div className="appt-grid appt-grid--3">
                           {allAppointments.filter(a => a.tab === apptTab).map(appt => (
                             <ApptCard key={appt.id} appt={appt} onClick={() => openDetail(appt)} />
                           ))}
@@ -228,47 +256,14 @@ function Dashboard() {
 
             {/* ── DOCUMENTS ──────────────────────────────── */}
             {activePage === 'documents' && (
-              <section className="page-section active">
-                <div className="page-content">
-                  <nav className="breadcrumb">
-                    <span className="breadcrumb-item" style={{ cursor: 'pointer' }} onClick={() => navigate('dashboard')}>Dashboard</span>
-                    <span className="breadcrumb-item active">Documents</span>
-                  </nav>
-                  <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
-                    <div><h4 className="section-title mb-1">Documents</h4><p className="section-dsc mb-0">Documents linked to your appointments and applications.</p></div>
-                    <button className="btn btn-primary"><i className="bi bi-upload"></i> Upload document</button>
-                  </div>
-
-                  <div className="dashboard-card">
-                    <div className="card-header"><h5 className="card-title">All documents</h5><span className="status-badge status-info">{documents.length} files</span></div>
-                    <hr className="card-divider" />
-                    <div className="card-body p-0">
-                      {documents.map((doc, i) => (
-                        <div key={doc.id} className="d-flex align-items-center gap-3 px-4 py-3" style={{ borderBottom: i < documents.length - 1 ? '1px solid #EDF3FA' : 'none' }}>
-                          <div className="card-icon flex-shrink-0">
-                            <i className={`bi ${doc.icon}`} style={{ fontSize: '20px', color: doc.color }}></i>
-                          </div>
-                          <div className="flex-grow-1" style={{ minWidth: 0 }}>
-                            <div className="fw-semibold text-sm text-truncate">{doc.name}</div>
-                            <div className="text-xs text-muted mt-1">{doc.type} · {doc.size} · Uploaded {doc.date}</div>
-                          </div>
-                          <div className="d-flex gap-2 flex-shrink-0">
-                            <button className="btn btn-outline-neutral btn-sm"><i className="bi bi-download"></i></button>
-                            <button className="btn btn-outline-neutral btn-sm" style={{ color: '#CC0C39', borderColor: '#FAB1C2' }}><i className="bi bi-trash3"></i></button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </section>
+              <DocumentsPage onHome={() => navigate('dashboard')} onNewBooking={() => setBookingOpen(true)} />
             )}
 
             {/* ── SETTINGS ───────────────────────────────── */}
             {activePage === 'settings' && <SettingsPage onHome={() => navigate('dashboard')} />}
 
             {/* ── HELP ───────────────────────────────────── */}
-            {activePage === 'help' && (
+            {/* {activePage === 'help' && (
               <section className="page-section active">
                 <div className="page-content">
                   <nav className="breadcrumb">
@@ -277,7 +272,6 @@ function Dashboard() {
                   </nav>
                   <h4 className="section-title mb-1">Help Center</h4>
                   <p className="section-dsc mb-4">Find answers or get in touch with our support team.</p>
-
                   <div className="row g-4 mb-4">
                     {[
                       { icon: 'bi-book', title: 'Documentation', desc: 'Browse guides and step-by-step instructions for all services.', action: 'Browse docs' },
@@ -296,7 +290,6 @@ function Dashboard() {
                       </div>
                     ))}
                   </div>
-
                   <div className="dashboard-card">
                     <div className="card-header"><h5 className="card-title">Quick answers</h5></div>
                     <hr className="card-divider" />
@@ -315,16 +308,216 @@ function Dashboard() {
                   </div>
                 </div>
               </section>
-            )}
+            )} */}
 
           </main>
         </div>
       </div>
 
       <BookingModal isOpen={bookingOpen} onClose={() => setBookingOpen(false)} />
+
+      {/* ── Mobile appointments filter modal ── */}
+      {apptFilterOpen && (
+        <div className="modal-overlay open" onClick={e => e.target === e.currentTarget && setApptFilterOpen(false)}>
+          <div className="modal" style={{ maxWidth: '340px' }}>
+            <div className="modal-header">
+              <div className="modal-icon"><i className="bi bi-funnel" style={{ fontSize: '18px', color: '#1B84E7' }}></i></div>
+              <div><h3 className="modal-title">Filter appointments</h3><p className="modal-sub">Select a view</p></div>
+              <button className="modal-close" onClick={() => setApptFilterOpen(false)}><i className="bi bi-x-lg"></i></button>
+            </div>
+            <div className="modal-body py-2">
+              {[
+                { key: 'upcoming', label: 'Upcoming', color: '#1B84E7', bg: 'rgba(27,132,231,0.08)' },
+                { key: 'completed', label: 'Completed', color: '#2FBF71', bg: 'rgba(47,191,113,0.08)' },
+                { key: 'cancelled', label: 'Cancelled', color: '#6B7280', bg: 'rgba(107,114,128,0.08)' },
+              ].map(opt => (
+                <button
+                  key={opt.key}
+                  className="d-flex align-items-center justify-content-between w-100 border-0 px-3 py-3 text-start"
+                  style={{ background: apptTab === opt.key ? opt.bg : 'transparent', borderRadius: '8px', cursor: 'pointer', fontWeight: apptTab === opt.key ? 600 : 400, color: apptTab === opt.key ? opt.color : '#374151', marginBottom: '4px', transition: 'background 0.15s' }}
+                  onClick={() => { setApptTab(opt.key); setApptFilterOpen(false); }}
+                >
+                  <span>{opt.label}</span>
+                  <span style={{ background: apptTab === opt.key ? opt.color : '#E5E7EB', color: apptTab === opt.key ? '#fff' : '#6B7280', padding: '2px 10px', borderRadius: '999px', fontSize: '12px', fontWeight: 600 }}>{tabCounts[opt.key]}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+
+// ── Documents Page ────────────────────────────────────────────────────────────
+
+const docTabs = [
+  { key: 'all',       label: 'All',           count: allDocuments.length },
+  { key: 'id',        label: 'ID & Passport', count: allDocuments.filter(d => d.category === 'id').length },
+  { key: 'financial', label: 'Financial',     count: allDocuments.filter(d => d.category === 'financial').length },
+  { key: 'photos',    label: 'Photos',        count: allDocuments.filter(d => d.category === 'photos').length },
+  { key: 'other',     label: 'Other',         count: allDocuments.filter(d => d.category === 'other').length },
+];
+
+const expiryLabels = {
+  valid:    { label: 'Valid',        className: 'expiry-badge expiry-valid' },
+  expiring: { label: 'Expires soon', className: 'expiry-badge expiry-expiring' },
+  expired:  { label: 'Expired',      className: 'expiry-badge expiry-expired' },
+};
+
+function DocumentsPage({ onHome }) {
+  const [docs, setDocs] = useState(allDocuments);
+  const [activeTab, setActiveTab] = useState('all');
+  const [uploadOpen, setUploadOpen] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState(null);
+  const [previewTarget, setPreviewTarget] = useState(null);
+  const [dragOver, setDragOver] = useState(false);
+
+  const visibleDocs = activeTab === 'all' ? docs : docs.filter(d => d.category === activeTab);
+
+  const handleDelete = () => {
+    setDocs(prev => prev.filter(d => d.id !== deleteTarget.id));
+    setDeleteTarget(null);
+  };
+
+  return (
+    <section className="page-section active">
+      <div className="page-content">
+        <nav className="breadcrumb">
+          <span className="breadcrumb-item" style={{ cursor: 'pointer' }} onClick={onHome}>Home</span>
+          <span className="breadcrumb-item active">Documents</span>
+        </nav>
+        <div className="section-title-row">
+          <div><h2 className="section-title" >My documents</h2><p>Upload and manage your government documents.</p></div>
+          <button className="btn btn-primary" onClick={() => setUploadOpen(true)}><i className="bi bi-upload"></i> Upload new</button>
+        </div>
+
+        {/* <div className="d-flex gap-2 mb-3 flex-wrap">
+          {docTabs.map(tab => (
+            <button
+              key={tab.key}
+              className={`tab-pill ${activeTab === tab.key ? 'active' : ''}`}
+              onClick={() => setActiveTab(tab.key)}
+            >
+              {tab.label} ({tab.count})
+            </button>
+          ))}
+        </div> */}
+
+        <div className="row g-3">
+          {visibleDocs.map(doc => {
+            const expiry = expiryLabels[doc.expiry];
+            return (
+              <div key={doc.id} className="col-md-6 col-lg-4">
+                <div className="doc-card">
+                  <div className={`doc-icon ${doc.iconClass}`}><i className={`bi ${doc.icon}`}></i></div>
+                  <h5>{doc.name}</h5>
+                  <div className="doc-details">
+                    <span>Uploaded: {doc.uploaded}</span>
+                    <span>Linked to: {doc.linked}</span>
+                    <span>Size: {doc.size}</span>
+                  </div>
+                  <div className="doc-footer">
+                    <span className={expiry.className}>{expiry.label}</span>
+                    <div className="d-flex gap-1">
+                      <button className="btn btn-icon btn-outline-neutral" title="Preview" onClick={() => setPreviewTarget(doc)}><i className="bi bi-eye"></i></button>
+                      <button className="btn btn-icon btn-outline-neutral" title="Download"><i className="bi bi-download"></i></button>
+                      <button className="btn btn-icon btn-outline-neutral" title="Delete" onClick={() => setDeleteTarget(doc)}><i className="bi bi-trash3 text-danger"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Upload modal */}
+      {uploadOpen && (
+        <div className="modal-overlay open" onClick={e => e.target === e.currentTarget && setUploadOpen(false)}>
+          <div className="modal" style={{ maxWidth: '480px' }}>
+            <div className="modal-header">
+              <div className="modal-icon"><i className="bi bi-cloud-arrow-up" style={{ fontSize: '20px', color: '#1B84E7' }}></i></div>
+              <div><h3 className="modal-title">Upload document</h3><p className="modal-sub">PDF, JPG or PNG · max 10 MB</p></div>
+              <button className="modal-close" onClick={() => setUploadOpen(false)}><i className="bi bi-x-lg"></i></button>
+            </div>
+            <div className="modal-body">
+              <div
+                className="text-center py-5 px-4"
+                style={{ border: `2px dashed ${dragOver ? '#1B84E7' : '#D0D5DD'}`, borderRadius: '12px', background: dragOver ? 'rgba(27,132,231,0.04)' : '#FAFAFA', cursor: 'pointer', transition: 'all 0.2s ease' }}
+                onDragOver={e => { e.preventDefault(); setDragOver(true); }}
+                onDragLeave={() => setDragOver(false)}
+                onDrop={e => { e.preventDefault(); setDragOver(false); }}
+              >
+                <i className="bi bi-cloud-arrow-up d-block mb-3" style={{ fontSize: '40px', color: dragOver ? '#1B84E7' : '#AEB6C2' }}></i>
+                <p className="fw-semibold text-sm mb-1" style={{ color: '#374151' }}>Drag & drop a file here</p>
+                <p className="text-muted text-xs mb-3">or click to browse from your device</p>
+                <button className="btn btn-outline-neutral btn-sm">Browse files</button>
+              </div>
+              <div className="mt-3">
+                <label className="form-label">Document name</label>
+                <input className="form-input-filled" type="text" placeholder="Enter a label for this document" />
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button className="btn btn-outline-neutral" onClick={() => setUploadOpen(false)}>Cancel</button>
+              <button className="btn btn-primary" onClick={() => setUploadOpen(false)}><i className="bi bi-cloud-arrow-up"></i> Upload</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete modal */}
+      {deleteTarget && (
+        <div className="modal-overlay open" onClick={e => e.target === e.currentTarget && setDeleteTarget(null)}>
+          <div className="modal" style={{ maxWidth: '420px', textAlign: 'center' }}>
+            <div style={{ padding: '32px 28px 8px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
+              <div style={{ width: '52px', height: '52px', borderRadius: '50%', background: '#FEF1F3', border: '1.5px solid #FAB1C2', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', color: '#CC0C39' }}>
+                <i className="bi bi-trash3"></i>
+              </div>
+              <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#112B5F', margin: 0 }}>Delete document?</h3>
+              <p style={{ fontSize: '14px', color: '#6B7280', margin: 0 }}>
+                Are you sure you want to delete <strong>{deleteTarget.name}</strong>? This action cannot be undone.
+              </p>
+            </div>
+            <div className="modal-footer" style={{ justifyContent: 'center', gap: '12px', padding: '20px 28px 28px' }}>
+              <button className="btn btn-outline-neutral" style={{ minWidth: '110px' }} onClick={() => setDeleteTarget(null)}>Cancel</button>
+              <button className="btn btn-danger" style={{ minWidth: '130px' }} onClick={handleDelete}><i className="bi bi-trash3"></i> Delete</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Preview modal */}
+      {previewTarget && (
+        <div className="modal-overlay open" onClick={e => e.target === e.currentTarget && setPreviewTarget(null)}>
+          <div className="modal" style={{ maxWidth: '520px' }}>
+            <div className="modal-header">
+              <div className="modal-icon"><i className="bi bi-file-earmark-text" style={{ fontSize: '20px', color: '#1B84E7' }}></i></div>
+              <div style={{ minWidth: 0 }}>
+                <h3 className="modal-title text-truncate">{previewTarget.name}</h3>
+                <p className="modal-sub">{previewTarget.size} · Uploaded {previewTarget.uploaded}</p>
+              </div>
+              <button className="modal-close" onClick={() => setPreviewTarget(null)}><i className="bi bi-x-lg"></i></button>
+            </div>
+            <div className="modal-body text-center py-4">
+              <div style={{ background: '#F5F7FA', borderRadius: '12px', height: '220px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '12px' }}>
+                <i className={`bi ${previewTarget.icon}`} style={{ fontSize: '52px', color: '#1B84E7' }}></i>
+                <p className="text-muted text-sm mb-0">{previewTarget.name}</p>
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button className="btn btn-outline-neutral" onClick={() => setPreviewTarget(null)}>Close</button>
+              <button className="btn btn-primary"><i className="bi bi-download"></i> Download</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
+
+// ── Settings Page ─────────────────────────────────────────────────────────────
 
 function Toggle({ defaultOn = false }) {
   const [on, setOn] = useState(defaultOn);
@@ -338,10 +531,15 @@ function Toggle({ defaultOn = false }) {
 function SettingsPage({ onHome }) {
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showTwoFAModal, setShowTwoFAModal] = useState(false);
+  const [deletePassword, setDeletePassword] = useState('');
+  const [deleteConfirmText, setDeleteConfirmText] = useState('');
   const [language, setLanguage] = useState('en');
   const [timezone, setTimezone] = useState('Europe/Istanbul');
   const [dateFormat, setDateFormat] = useState('DD/MM/YYYY');
   const [textDir, setTextDir] = useState('ltr');
+
+  const canDelete = deletePassword.length >= 6 && deleteConfirmText === 'DELETE';
 
   return (
     <section className="page-section active">
@@ -377,7 +575,7 @@ function SettingsPage({ onHome }) {
               </div>
             </div>
 
-            {/* Notification preferences */}
+            {/* Notifications */}
             <div className="dashboard-card">
               <div className="card-header"><h5 className="card-title">Notification preferences</h5></div>
               <hr className="card-divider" />
@@ -399,7 +597,7 @@ function SettingsPage({ onHome }) {
             {/* Security */}
             <div className="dashboard-card">
               <div className="card-header">
-                <div className="d-flex align-items-center gap-2"><h5 className="card-title">Security</h5></div>
+                <h5 className="card-title">Security</h5>
                 <span className="settings-security-badge"><i className="bi bi-patch-check-fill"></i> Account secured</span>
               </div>
               <hr className="card-divider" />
@@ -410,7 +608,7 @@ function SettingsPage({ onHome }) {
                 </div>
                 <div className="settings-security-row">
                   <div className="pref-info"><h6>Two-factor authentication</h6><p>Adds a verification step each time you sign in</p></div>
-                  <button className="btn btn-outline-neutral btn-sm">Enable</button>
+                  <button className="btn btn-outline-neutral btn-sm" onClick={() => setShowTwoFAModal(true)}>Enable</button>
                 </div>
                 <div className="settings-security-row">
                   <div className="pref-info"><h6>Active sessions</h6><p>2 devices currently signed in</p></div>
@@ -431,35 +629,19 @@ function SettingsPage({ onHome }) {
                 <div className="row g-3">
                   <div className="col-md-6">
                     <label className="form-label">Display language</label>
-                    <DropdownField
-                      placeholder="Select language"
-                      options={[{ value: 'en', label: 'English (US)' }, { value: 'tr', label: 'Türkçe' }, { value: 'ar', label: 'العربية' }, { value: 'fr', label: 'Français' }, { value: 'de', label: 'Deutsch' }]}
-                      value={language} onChange={setLanguage}
-                    />
+                    <DropdownField placeholder="Select language" options={[{ value: 'en', label: 'English (US)' }, { value: 'tr', label: 'Türkçe' }, { value: 'ar', label: 'العربية' }, { value: 'fr', label: 'Français' }, { value: 'de', label: 'Deutsch' }]} value={language} onChange={setLanguage} />
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">Timezone</label>
-                    <DropdownField
-                      placeholder="Select timezone"
-                      options={[{ value: 'Europe/Istanbul', label: 'Europe / Istanbul (UTC+3)' }, { value: 'Europe/London', label: 'Europe / London (UTC+0)' }, { value: 'America/New_York', label: 'America / New York (UTC−5)' }, { value: 'Asia/Dubai', label: 'Asia / Dubai (UTC+4)' }]}
-                      value={timezone} onChange={setTimezone}
-                    />
+                    <DropdownField placeholder="Select timezone" options={[{ value: 'Europe/Istanbul', label: 'Europe / Istanbul (UTC+3)' }, { value: 'Europe/London', label: 'Europe / London (UTC+0)' }, { value: 'America/New_York', label: 'America / New York (UTC−5)' }, { value: 'Asia/Dubai', label: 'Asia / Dubai (UTC+4)' }]} value={timezone} onChange={setTimezone} />
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">Date format</label>
-                    <DropdownField
-                      placeholder="Select format"
-                      options={[{ value: 'DD/MM/YYYY', label: 'DD / MM / YYYY' }, { value: 'MM/DD/YYYY', label: 'MM / DD / YYYY' }, { value: 'YYYY-MM-DD', label: 'YYYY-MM-DD' }]}
-                      value={dateFormat} onChange={setDateFormat}
-                    />
+                    <DropdownField placeholder="Select format" options={[{ value: 'DD/MM/YYYY', label: 'DD / MM / YYYY' }, { value: 'MM/DD/YYYY', label: 'MM / DD / YYYY' }, { value: 'YYYY-MM-DD', label: 'YYYY-MM-DD' }]} value={dateFormat} onChange={setDateFormat} />
                   </div>
                   <div className="col-md-6">
                     <label className="form-label">Text direction</label>
-                    <DropdownField
-                      placeholder="Select direction"
-                      options={[{ value: 'ltr', label: 'Left to right (LTR)' }, { value: 'rtl', label: 'Right to left (RTL)' }]}
-                      value={textDir} onChange={setTextDir}
-                    />
+                    <DropdownField placeholder="Select direction" options={[{ value: 'ltr', label: 'Left to right (LTR)' }, { value: 'rtl', label: 'Right to left (RTL)' }]} value={textDir} onChange={setTextDir} />
                   </div>
                 </div>
                 <div className="d-flex justify-content-end mt-3">
@@ -468,7 +650,7 @@ function SettingsPage({ onHome }) {
               </div>
             </div>
 
-            {/* Delete account danger card */}
+            {/* Delete account */}
             <div className="alert-card alert-card--danger">
               <div className="alert-card-icon-wrap"><i className="bi bi-exclamation-circle"></i></div>
               <div className="alert-card-content">
@@ -481,7 +663,6 @@ function SettingsPage({ onHome }) {
                 </div>
               </div>
             </div>
-
           </div>
 
           {/* Sidebar */}
@@ -528,20 +709,69 @@ function SettingsPage({ onHome }) {
           </div>
         )}
 
+        {/* 2FA modal */}
+        {showTwoFAModal && (
+          <div className="modal-overlay open" onClick={e => e.target === e.currentTarget && setShowTwoFAModal(false)}>
+            <div className="modal" style={{ maxWidth: '440px' }}>
+              <div className="modal-header">
+                <div className="modal-icon"><i className="bi bi-shield-lock" style={{ fontSize: '20px', color: '#1B84E7' }}></i></div>
+                <div><h3 className="modal-title">Two-Factor Authentication</h3><p className="modal-sub">Secure your account with 2FA</p></div>
+                <button className="modal-close" onClick={() => setShowTwoFAModal(false)}><i className="bi bi-x-lg"></i></button>
+              </div>
+              <div className="modal-body">
+                <div className="alert-card alert-card--blue mb-4" style={{ padding: '12px 14px' }}>
+                  <div className="alert-card-content">
+                    <div className="alert-card-text">Scan the QR code below with your authenticator app (e.g. Google Authenticator, Authy), then enter the 6-digit code to confirm.</div>
+                  </div>
+                </div>
+                <div className="text-center mb-4">
+                  <div style={{ width: '148px', height: '148px', borderRadius: '12px', background: '#F5F7FA', border: '2px dashed #D0D5DD', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <i className="bi bi-qr-code" style={{ fontSize: '60px', color: '#AEB6C2' }}></i>
+                  </div>
+                  <p className="text-muted text-xs mt-2 mb-0">Scan with your authenticator app</p>
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Verification code <span className="text-danger">*</span></label>
+                  <input className="form-input-filled" type="text" placeholder="Enter 6-digit code" maxLength={6} style={{ letterSpacing: '0.2em', textAlign: 'center', fontSize: '20px' }} />
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button className="btn btn-outline-neutral" onClick={() => setShowTwoFAModal(false)}>Cancel</button>
+                <button className="btn btn-primary" onClick={() => setShowTwoFAModal(false)}><i className="bi bi-shield-check"></i> Enable 2FA</button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Delete account modal */}
         {showDeleteModal && (
           <div className="modal-overlay open" onClick={e => e.target === e.currentTarget && setShowDeleteModal(false)}>
-            <div className="modal" style={{ maxWidth: '420px', textAlign: 'center' }}>
-              <div style={{ padding: '32px 28px 8px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
-                <div style={{ width: '52px', height: '52px', borderRadius: '50%', background: '#FEF1F3', border: '1.5px solid #FAB1C2', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', color: '#CC0C39' }}>
-                  <i className="bi bi-trash3"></i>
-                </div>
-                <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#112B5F', margin: 0 }}>Delete Account</h3>
-                <p style={{ fontSize: '14px', color: '#6B7280', margin: 0 }}>This will permanently delete your account and all data. This action <strong>cannot be undone</strong>.</p>
+            <div className="modal" style={{ maxWidth: '440px' }}>
+              <div className="modal-header">
+                <div className="modal-icon" style={{ background: '#FEF1F3', border: '1px solid #FAB1C2' }}><i className="bi bi-trash3" style={{ fontSize: '18px', color: '#CC0C39' }}></i></div>
+                <div><h3 className="modal-title">Delete account</h3><p className="modal-sub">This action is permanent and irreversible</p></div>
+                <button className="modal-close" onClick={() => { setShowDeleteModal(false); setDeletePassword(''); setDeleteConfirmText(''); }}><i className="bi bi-x-lg"></i></button>
               </div>
-              <div className="modal-footer" style={{ justifyContent: 'center', gap: '12px', padding: '20px 28px 28px' }}>
-                <button className="btn btn-outline-neutral" style={{ minWidth: '110px' }} onClick={() => setShowDeleteModal(false)}>Cancel</button>
-                <button className="btn btn-danger" style={{ minWidth: '130px' }} onClick={() => setShowDeleteModal(false)}>Delete account</button>
+              <div className="modal-body">
+                <div className="alert-card alert-card--danger mb-4" style={{ padding: '12px 14px' }}>
+                  <div className="alert-card-content">
+                    <div className="alert-card-text">Deleting your account will permanently remove all your appointments, documents, and personal data. <strong>This cannot be undone.</strong></div>
+                  </div>
+                </div>
+                <div className="form-group mb-3">
+                  <label className="form-label">Enter your password to confirm</label>
+                  <input className="form-input-filled" type="password" placeholder="••••••••" value={deletePassword} onChange={e => setDeletePassword(e.target.value)} />
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Type <strong>DELETE</strong> to confirm</label>
+                  <input className="form-input-filled" type="text" placeholder="DELETE" value={deleteConfirmText} onChange={e => setDeleteConfirmText(e.target.value)} />
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button className="btn btn-outline-neutral" onClick={() => { setShowDeleteModal(false); setDeletePassword(''); setDeleteConfirmText(''); }}>Cancel</button>
+                <button className="btn btn-danger" disabled={!canDelete} onClick={() => setShowDeleteModal(false)}>
+                  <i className="bi bi-trash3"></i> Delete account
+                </button>
               </div>
             </div>
           </div>
@@ -552,6 +782,23 @@ function SettingsPage({ onHome }) {
   );
 }
 
+// ── Appointment Detail ────────────────────────────────────────────────────────
+
+const cancelReasons = [
+  { value: 'schedule-conflict', label: 'Schedule conflict' },
+  { value: 'no-longer-needed', label: 'Service no longer needed' },
+  { value: 'wrong-booking', label: 'Wrong date/time selected' },
+  { value: 'health', label: 'Health or emergency reasons' },
+  { value: 'other', label: 'Other' },
+];
+
+const rescheduleSlots = {
+  Morning: ['8:00 AM', '8:30 AM', '9:00 AM', '9:30 AM', '10:30 AM', '11:30 AM'],
+  Afternoon: ['12:00 PM', '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM', '3:00 PM'],
+  Evening: ['4:00 PM', '4:30 PM', '5:00 PM'],
+};
+const unavailableReschedule = ['10:00 AM', '11:00 AM', '12:30 PM', '3:30 PM'];
+
 const submittedDocs = [
   { num: '01', name: 'Birth Certificate',  desc: 'Original or certified copy — issued by a recognized civil authority', file: 'BirthCertificate.pdf',  size: '1.2 MB' },
   { num: '02', name: 'Proof of Address',   desc: 'Utility bill, bank statement, or lease agreement within 3 months',   file: 'ProofOfAddress.pdf',   size: '0.8 MB' },
@@ -560,40 +807,48 @@ const submittedDocs = [
 
 const timelineSteps = {
   upcoming: [
-    { label: 'Booked',         icon: 'tick',    state: 'done' },
+    { label: 'Booked',         icon: 'tick',      state: 'done' },
     { label: 'Pending review', icon: 'hourglass', state: 'current' },
-    { label: 'Confirmed',      icon: '3',       state: '' },
-    { label: 'Visit',          icon: '4',       state: '' },
+    { label: 'Confirmed',      icon: '3',         state: '' },
+    { label: 'Visit',          icon: '4',         state: '' },
   ],
   completed: [
-    { label: 'Booked',         icon: 'tick',    state: 'done' },
-    { label: 'Confirmed',      icon: 'tick',    state: 'done' },
-    { label: 'Visited',        icon: 'tick',    state: 'done' },
-    { label: 'Completed',      icon: 'tick',    state: 'done' },
+    { label: 'Booked',    icon: 'tick', state: 'done' },
+    { label: 'Confirmed', icon: 'tick', state: 'done' },
+    { label: 'Visited',   icon: 'tick', state: 'done' },
+    { label: 'Completed', icon: 'tick', state: 'done' },
   ],
   cancelled: [
-    { label: 'Booked',         icon: 'tick',    state: 'done' },
-    { label: 'Cancelled',      icon: 'x',       state: 'cancelled' },
-    { label: 'Confirmed',      icon: '3',       state: '' },
-    { label: 'Visit',          icon: '4',       state: '' },
+    { label: 'Booked',    icon: 'tick', state: 'done' },
+    { label: 'Cancelled', icon: 'x',   state: 'cancelled' },
+    { label: 'Confirmed', icon: '3',   state: '' },
+    { label: 'Visit',     icon: '4',   state: '' },
   ],
 };
 
 function StepDot({ step }) {
-  if (step.icon === 'tick') return <img src="/assets/images/svg/tickBlue.svg" width="14" alt="" />;
+  if (step.icon === 'tick')     return <img src="/assets/images/svg/tickBlue.svg" width="14" alt="" />;
   if (step.icon === 'hourglass') return <i className="bi bi-hourglass-split" style={{ fontSize: '11px' }}></i>;
-  if (step.icon === 'x') return <i className="bi bi-x-lg" style={{ fontSize: '11px' }}></i>;
+  if (step.icon === 'x')        return <i className="bi bi-x-lg" style={{ fontSize: '11px' }}></i>;
   return <span>{step.icon}</span>;
 }
 
 function AppointmentDetail({ appt, onBack, onHome, onCancelConfirm }) {
   const [showCancelModal, setShowCancelModal] = useState(false);
+  const [cancelReason, setCancelReason] = useState('');
+  const [cancelNote, setCancelNote] = useState('');
   const [showRescheduleModal, setShowRescheduleModal] = useState(false);
+  const [rescheduleDate, setRescheduleDate] = useState('');
+  const [rescheduleTime, setRescheduleTime] = useState('');
   const [showDocModal, setShowDocModal] = useState(null);
+  const [showQrModal, setShowQrModal] = useState(false);
+  const [showReceiptModal, setShowReceiptModal] = useState(false);
   const [showTimelineModal, setShowTimelineModal] = useState(false);
+
   const steps = timelineSteps[appt.tab] || timelineSteps.upcoming;
   const isPending = appt.status === 'Pending approval';
   const isUpcoming = appt.tab === 'upcoming';
+  const isCompleted = appt.tab === 'completed';
 
   const locationAddresses = {
     'North District Office': '456 North Avenue, Capital City',
@@ -632,11 +887,18 @@ function AppointmentDetail({ appt, onBack, onHome, onCancelConfirm }) {
               </div>
             </div>
           )}
+          {isCompleted && (
+            <div className="ms-auto d-flex gap-2">
+              <button className="btn btn-outline-neutral btn-sm d-none d-lg-flex" onClick={() => setShowReceiptModal(true)}>
+                <i className="bi bi-receipt"></i> Receipt
+              </button>
+            </div>
+          )}
         </div>
 
         <div className="row g-4">
 
-          {/* ── Timeline card ── */}
+          {/* Timeline card */}
           <div className="col-lg-8">
             <div className="dashboard-card">
               <div className="card-header">
@@ -674,7 +936,7 @@ function AppointmentDetail({ appt, onBack, onHome, onCancelConfirm }) {
             </div>
           </div>
 
-          {/* ── Quick actions — desktop only ── */}
+          {/* Quick actions */}
           <div className="col-lg-4 d-none d-lg-block">
             <div className="dashboard-card h-100 d-flex align-items-center justify-content-center">
               <div className="card-body w-100 p-0">
@@ -687,23 +949,36 @@ function AppointmentDetail({ appt, onBack, onHome, onCancelConfirm }) {
                       </button>
                     </div>
                     <div className="col-6">
+                      <button className="quick-action d-flex flex-column align-items-center text-center w-100 border-0 bg-transparent" onClick={() => setShowQrModal(true)}>
+                        <div className="qa-icon mb-2" style={{ background: '#EEF2FF', color: '#4F46E5' }}><i className="bi bi-qr-code"></i></div>
+                        <span className="qa-label">View QR</span>
+                      </button>
+                    </div>
+                    <div className="col-6">
                       <button className="quick-action d-flex flex-column align-items-center text-center w-100 border-0 bg-transparent" onClick={() => setShowCancelModal(true)}>
                         <div className="qa-icon mb-2" style={{ background: '#FEF2F2', color: '#DC2626' }}><i className="bi bi-x-lg"></i></div>
                         <span className="qa-label">Cancel</span>
                       </button>
                     </div>
+                    <div className="col-6">
+                      <button className="quick-action d-flex flex-column align-items-center text-center w-100 border-0 bg-transparent">
+                        <div className="qa-icon mb-2" style={{ background: '#F0FDF4', color: '#16A34A' }}><i className="bi bi-download"></i></div>
+                        <span className="qa-label">Download</span>
+                      </button>
+                    </div>
                   </div>
                 ) : (
                   <div className="text-center py-3">
-                    <button className="btn btn-outline-neutral w-100 mb-2"><i className="bi bi-download"></i> Download PDF</button>
-                    <button className="btn btn-outline-neutral w-100"><i className="bi bi-arrow-repeat"></i> Book again</button>
+                    <button className="btn btn-outline-neutral w-100 mb-2" onClick={() => setShowReceiptModal(true)}><i className="bi bi-receipt"></i> View receipt</button>
+                    <button className="btn btn-outline-neutral w-100" onClick={() => setShowQrModal(true)}><i className="bi bi-qr-code"></i> QR code</button>
+                    <button className="btn btn-outline-neutral w-100 mt-2"><i className="bi bi-arrow-repeat"></i> Book again</button>
                   </div>
                 )}
               </div>
             </div>
           </div>
 
-          {/* ── Appointment information ── */}
+          {/* Appointment information */}
           <div className="col-lg-8">
             <div className="dashboard-card">
               <div className="card-header"><h5 className="card-title">Appointment information</h5></div>
@@ -729,7 +1004,7 @@ function AppointmentDetail({ appt, onBack, onHome, onCancelConfirm }) {
             </div>
           </div>
 
-          {/* ── Location ── */}
+          {/* Location */}
           <div className="col-lg-4">
             <div className="dashboard-card">
               <div className="card-header"><h5 className="card-title">Location</h5></div>
@@ -744,7 +1019,7 @@ function AppointmentDetail({ appt, onBack, onHome, onCancelConfirm }) {
             </div>
           </div>
 
-          {/* ── Submitted documents ── */}
+          {/* Submitted documents */}
           <div className="col-12">
             <div className="dashboard-card">
               <div className="card-header"><h5 className="card-title">Submitted documents</h5></div>
@@ -769,60 +1044,181 @@ function AppointmentDetail({ appt, onBack, onHome, onCancelConfirm }) {
               </div>
             </div>
           </div>
-
         </div>
 
-        {/* ── Modals ── */}
+        {/* Cancel modal */}
         {showCancelModal && (
           <div className="modal-overlay open" onClick={e => e.target === e.currentTarget && setShowCancelModal(false)}>
-            <div className="modal" style={{ maxWidth: '420px', textAlign: 'center' }}>
-              <div style={{ padding: '32px 28px 8px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
-                <div style={{ width: '52px', height: '52px', borderRadius: '50%', background: '#FEF1F3', border: '1.5px solid #FAB1C2', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', color: '#CC0C39' }}>
-                  <i className="bi bi-x-circle"></i>
+            <div className="modal" style={{ maxWidth: '460px' }}>
+              <div className="modal-header">
+                <div className="modal-icon" style={{ background: '#FEF1F3', border: '1px solid #FAB1C2' }}><i className="bi bi-x-circle" style={{ fontSize: '18px', color: '#CC0C39' }}></i></div>
+                <div>
+                  <h3 className="modal-title">Cancel Appointment</h3>
+                  <p className="modal-sub">{appt.title} · {appt.month} {appt.day}</p>
                 </div>
-                <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#112B5F', margin: 0 }}>Cancel Appointment</h3>
-                <p style={{ fontSize: '14px', color: '#6B7280', margin: 0 }}>
-                  Are you sure you want to cancel <strong>{appt.title}</strong> on {appt.month} {appt.day}? This action cannot be undone.
-                </p>
+                <button className="modal-close" onClick={() => setShowCancelModal(false)}><i className="bi bi-x-lg"></i></button>
               </div>
-              <div className="modal-footer" style={{ justifyContent: 'center', gap: '12px', padding: '20px 28px 28px' }}>
-                <button className="btn btn-outline-neutral" style={{ minWidth: '110px' }} onClick={() => setShowCancelModal(false)}>Keep it</button>
-                <button className="btn btn-danger" style={{ minWidth: '130px' }} onClick={() => { setShowCancelModal(false); onCancelConfirm(); }}>
-                  Yes, cancel <i className="bi bi-arrow-right"></i>
+              <div className="modal-body">
+                <div className="alert-card alert-card--warning mb-4" style={{ padding: '10px 14px' }}>
+                  <div className="alert-card-content">
+                    <div className="alert-card-text">Cancellations made less than 12 hours before the appointment may not be refunded.</div>
+                  </div>
+                </div>
+                <div className="form-group mb-3">
+                  <label className="form-label">Reason for cancellation <span className="text-danger">*</span></label>
+                  <DropdownField placeholder="Select a reason" options={cancelReasons} value={cancelReason} onChange={setCancelReason} />
+                </div>
+                <div className="form-group">
+                  <label className="form-label">Additional notes <span className="text-muted" style={{ fontSize: '11px' }}>(optional)</span></label>
+                  <textarea className="form-input-filled" rows={3} placeholder="Any additional information..." value={cancelNote} onChange={e => setCancelNote(e.target.value)} style={{ resize: 'vertical', minHeight: '80px' }}></textarea>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button className="btn btn-outline-neutral" onClick={() => setShowCancelModal(false)}>Keep appointment</button>
+                <button className="btn btn-danger" disabled={!cancelReason} onClick={() => { setShowCancelModal(false); onCancelConfirm(); }}>
+                  <i className="bi bi-x-lg"></i> Cancel appointment
                 </button>
               </div>
             </div>
           </div>
         )}
 
+        {/* Reschedule modal */}
         {showRescheduleModal && (
           <div className="modal-overlay open" onClick={e => e.target === e.currentTarget && setShowRescheduleModal(false)}>
-            <div className="modal" style={{ maxWidth: '420px' }}>
+            <div className="modal" style={{ maxWidth: '480px' }}>
               <div className="modal-header">
                 <div className="modal-icon"><i className="bi bi-calendar-event" style={{ fontSize: '20px', color: '#1B84E7' }}></i></div>
                 <div><h3 className="modal-title">Reschedule Appointment</h3><p className="modal-sub">Choose a new date and time</p></div>
                 <button className="modal-close" onClick={() => setShowRescheduleModal(false)}><i className="bi bi-x-lg"></i></button>
               </div>
               <div className="modal-body">
-                <div className="form-group mb-3">
+                <div className="dashboard-card mb-3" style={{ background: '#F8FAFE', border: '1px solid #DDE6F0', padding: '12px 16px', borderRadius: '10px', boxShadow: 'none' }}>
+                  <div className="text-xs text-muted mb-1">Current schedule</div>
+                  <div className="d-flex gap-3 align-items-center">
+                    <span className="fw-semibold text-sm" style={{ color: '#112B5F' }}>{appt.weekday}, {appt.month} {appt.day}, 2026</span>
+                    <span className="status-badge status-info">{appt.time}</span>
+                  </div>
+                </div>
+                <div className="form-group mb-4">
                   <label className="form-label">New date <span className="text-danger">*</span></label>
-                  <input type="date" className="form-input-filled" min={new Date().toISOString().split('T')[0]} />
+                  <input type="date" className="form-input-filled" min={new Date().toISOString().split('T')[0]} value={rescheduleDate} onChange={e => { setRescheduleDate(e.target.value); setRescheduleTime(''); }} />
                 </div>
                 <div className="form-group">
-                  <label className="form-label">New time <span className="text-danger">*</span></label>
-                  <select className="form-input-filled">
-                    {['8:00 AM','8:30 AM','9:00 AM','9:30 AM','10:30 AM','11:30 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM'].map(t => <option key={t}>{t}</option>)}
-                  </select>
+                  <label className="form-label mb-2">New time <span className="text-danger">*</span></label>
+                  {Object.entries(rescheduleSlots).map(([group, slots]) => (
+                    <div key={group} className="mb-3">
+                      <div className="text-xs fw-semibold text-muted mb-2" style={{ textTransform: 'uppercase', letterSpacing: '0.06em' }}>{group}</div>
+                      <div className="d-flex flex-wrap gap-2">
+                        {slots.map(slot => {
+                          const unavail = unavailableReschedule.includes(slot);
+                          const selected = rescheduleTime === slot;
+                          return (
+                            <button
+                              key={slot}
+                              type="button"
+                              disabled={unavail}
+                              onClick={() => !unavail && setRescheduleTime(slot)}
+                              className={`time-slot ${selected ? 'selected' : ''} ${unavail ? 'unavailable' : ''}`}
+                            >
+                              {slot}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
               <div className="modal-footer">
                 <button className="btn btn-outline-neutral" onClick={() => setShowRescheduleModal(false)}>Cancel</button>
-                <button className="btn btn-primary" onClick={() => setShowRescheduleModal(false)}>Confirm reschedule <i className="bi bi-arrow-right"></i></button>
+                <button className="btn btn-primary" disabled={!rescheduleDate || !rescheduleTime} onClick={() => setShowRescheduleModal(false)}>
+                  Confirm reschedule <i className="bi bi-arrow-right"></i>
+                </button>
               </div>
             </div>
           </div>
         )}
 
+        {/* QR modal */}
+        {showQrModal && (
+          <div className="modal-overlay open" onClick={e => e.target === e.currentTarget && setShowQrModal(false)}>
+            <div className="modal" style={{ maxWidth: '380px', textAlign: 'center' }}>
+              <div className="modal-header">
+                <div className="modal-icon"><i className="bi bi-qr-code" style={{ fontSize: '20px', color: '#1B84E7' }}></i></div>
+                <div><h3 className="modal-title">Appointment QR Code</h3><p className="modal-sub">{appt.title}</p></div>
+                <button className="modal-close" onClick={() => setShowQrModal(false)}><i className="bi bi-x-lg"></i></button>
+              </div>
+              <div className="modal-body py-4">
+                <div className="bk-qr-wrap mx-auto" style={{ width: '180px', height: '180px' }}>
+                  <i className="bk-qr-icon bi bi-qr-code"></i>
+                </div>
+                <p className="bk-qr-hint mt-3">Show this QR code at the service center on your appointment day</p>
+                <div className="d-flex justify-content-center mt-3">
+                  <span className="bk-ref-badge">
+                    <i className="bi bi-hash"></i> CQ-2026{appt.month}{appt.day}-4892
+                  </span>
+                </div>
+              </div>
+              <div className="modal-footer" style={{ justifyContent: 'center', gap: '12px' }}>
+                <button className="btn btn-outline-neutral" onClick={() => setShowQrModal(false)}>Close</button>
+                <button className="btn btn-primary"><i className="bi bi-download"></i> Download QR</button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Receipt modal */}
+        {showReceiptModal && (
+          <div className="modal-overlay open" onClick={e => e.target === e.currentTarget && setShowReceiptModal(false)}>
+            <div className="modal" style={{ maxWidth: '440px' }}>
+              <div className="modal-header">
+                <div className="modal-icon"><i className="bi bi-receipt" style={{ fontSize: '20px', color: '#1B84E7' }}></i></div>
+                <div><h3 className="modal-title">Appointment Receipt</h3><p className="modal-sub">{appt.title}</p></div>
+                <button className="modal-close" onClick={() => setShowReceiptModal(false)}><i className="bi bi-x-lg"></i></button>
+              </div>
+              <div className="modal-body">
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                  <span className="text-xs text-muted">Reference</span>
+                  <span className="fw-semibold text-sm">CQ-2026{appt.month}{appt.day}-4892</span>
+                </div>
+                <hr style={{ borderColor: '#EDF3FA', margin: '0 0 14px' }} />
+                {[
+                  ['Service', appt.title],
+                  ['Service center', appt.location],
+                  ['Date', `${appt.weekday}, ${appt.month} ${appt.day}, 2026`],
+                  ['Time', appt.time],
+                  ['Applicant', 'Aysel Kaya'],
+                  ['Status', appt.status],
+                ].map(([label, val]) => (
+                  <div key={label} className="info-row d-flex justify-content-between">
+                    <span className="info-label">{label}</span>
+                    <span className="info-value">{val}</span>
+                  </div>
+                ))}
+                <hr style={{ borderColor: '#EDF3FA', margin: '14px 0' }} />
+                <div className="d-flex justify-content-between">
+                  <span className="info-label">Service fee</span>
+                  <span className="info-value">$110.00</span>
+                </div>
+                <div className="d-flex justify-content-between">
+                  <span className="info-label">Processing fee</span>
+                  <span className="info-value">$5.00</span>
+                </div>
+                <div className="d-flex justify-content-between mt-2">
+                  <span className="fw-bold" style={{ fontSize: '14px' }}>Total</span>
+                  <span className="fw-bold text-secondary" style={{ fontSize: '16px' }}>$115.00</span>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button className="btn btn-outline-neutral" onClick={() => setShowReceiptModal(false)}>Close</button>
+                <button className="btn btn-primary"><i className="bi bi-download"></i> Download PDF</button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Timeline modal */}
         {showTimelineModal && (
           <div className="modal-overlay open" onClick={e => e.target === e.currentTarget && setShowTimelineModal(false)}>
             <div className="modal" style={{ maxWidth: '400px' }}>
@@ -858,6 +1254,7 @@ function AppointmentDetail({ appt, onBack, onHome, onCancelConfirm }) {
           </div>
         )}
 
+        {/* Document preview modal */}
         {showDocModal && (
           <div className="modal-overlay open" onClick={e => e.target === e.currentTarget && setShowDocModal(null)}>
             <div className="modal" style={{ maxWidth: '480px' }}>

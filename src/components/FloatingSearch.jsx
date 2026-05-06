@@ -101,13 +101,11 @@ function FloatingSearch() {
 
   return (
     <div className="floating-rect container position-relative z-3 bg-white border-0 rounded shadow">
-      {loading && (
-        <div className="fr-loading">
-          <div className="fr-loading-spinner"></div>
-          <p className="fr-loading-title">Finding available appointments</p>
-          <p className="fr-loading-sub">Checking slots across all branches<span className="fr-dots"></span></p>
-        </div>
-      )}
+      <div className={`fr-loading ${loading ? 'active' : ''}`}>
+        <div className="fr-loading-spinner"></div>
+        <p className="fr-loading-title">Finding available appointments</p>
+        <p className="fr-loading-sub">Checking slots across all branches<span className="fr-dots"></span></p>
+      </div>
       <div className="p-4">
         <div className="row g-3 align-items-end">
           <div className="col-12 col-md-6 col-lg">

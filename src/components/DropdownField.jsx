@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 
-function DropdownField({ placeholder, options, groups, value, onChange, searchable, multiple, size, error }) {
+function DropdownField({ placeholder, options, groups, value, onChange, searchable, multiple, size, error, disabled }) {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState('');
   const ref = useRef(null);
@@ -65,7 +65,7 @@ function DropdownField({ placeholder, options, groups, value, onChange, searchab
 
   return (
     <div
-      className={`dropdown-field ${open ? 'open' : ''} ${hasValue ? 'has-value' : ''} ${error ? 'fr-error' : ''}`}
+      className={`dropdown-field ${open ? 'open' : ''} ${hasValue ? 'has-value' : ''} ${error ? 'fr-error' : ''} ${disabled ? 'df-locked' : ''}`}
       ref={ref}
     >
       <button
@@ -73,7 +73,8 @@ function DropdownField({ placeholder, options, groups, value, onChange, searchab
         className={`dropdown-field-trigger ${size === 'lg' ? 'dropdown-field-trigger-lg' : ''}`}
         aria-haspopup="listbox"
         aria-expanded={open}
-        onClick={() => setOpen(prev => !prev)}
+        disabled={disabled}
+        onClick={() => !disabled && setOpen(prev => !prev)}
       >
         <span className={`dropdown-field-selected-text ${isPlaceholder ? 'dropdown-field-placeholder' : ''}`}>
           {displayText}

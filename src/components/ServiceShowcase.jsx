@@ -125,7 +125,7 @@ function FlipCard({ card }) {
             <ul className="back-features">
               {card.features.map(f => <li key={f}><span className="feature-dot"></span> {f}</li>)}
             </ul>
-            <Link to="/services" className="white-btn" onClick={e => e.stopPropagation()}>
+            <Link to="/services" className="btn white-btn" onClick={e => e.stopPropagation()}>
               Browse services <i className="bi bi-arrow-right"></i>
             </Link>
           </div>
